@@ -12,13 +12,15 @@
         $modelo = $_POST["modelo"];
         $detalles = $_POST["detalles"];
         $tipo_producto = $_POST["tipo_producto"];
+        $fecha_control = $_POST["fecha_control_inicio"];
+        $fecha_siguiente = $_POST["fecha_control_final"];
         $ubicacion = $_POST["ubi"];
         $proveedor = $_POST["proveedor"];
         $unidades = $_POST["unidades"];
         $tipo_articulo = $_POST["tipo_articulo"];
 
-        $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, ubicacion, proveedor, unidades, forma_producto) 
-            VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+        $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+            VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
 
         if($conn->query($sql) === TRUE){
             echo "Artículo creado con éxito.";
