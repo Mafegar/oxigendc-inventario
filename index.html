@@ -1,0 +1,37 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="index.css">
+    <title>Inicio de Sesion</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <img src="./img/logo-oxigen.png" alt="">
+
+        <div class="formulario">
+            <h1>Inicio de Sesion</h1>
+
+            <form action="login.php" method="post">
+                <div class="user">
+                    <input type="text" name="username" id="username" placeholder="Username"><i class='bx bxs-user'></i>
+                </div>
+                <br>
+                <div class="pass">
+                    <input type="password" name="password" id="password" placeholder="Password"><i class='bx bxs-lock-alt'></i>
+                </div>    
+                <br>
+
+                <input type="submit" class="boton-iniciar" name="iniciar_sesion" value="Iniciar Sesion">
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
