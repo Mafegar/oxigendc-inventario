@@ -156,35 +156,7 @@
                                 <input type="date" name="fecha_control_inicio" id="fecha_control_inicio">
                                 <br><br>
                             </div>
-                        </div>  
-
-                        <!-- <div class="colum2">
-                            <label for="detalles">Detalles: </label>
-                            <input type="text" name="detalles" id="detalles" placeholder="Detalles">
-                            <br><br>
-                            <label for="tipo_producto">Tipo de Producto: </label>
-                            <select name="tipo_producto" id="tipo_producto" required>
-                                <option value="">Escoja una opcion</option>
-                                <option value="Equipo">Equipo</option>
-                                <option value="Kit Maleta">Kit Maleta</option>
-                                <option value="Herramienta">Herramienta</option>
-                            </select>
-                            <br><br>
-
-                            <div class="fecha-control">
-                                <label for="fecha_control">Fecha Control: </label>
-                                <input type="date" name="fecha_control" id="fecha_control">
-                                <br><br>
-                            </div>
-
-                            <label for="ubi">Ubicación: </label>
-                            <select name="ubi" id="ubi" required>
-                                <option value="">Seleccione la Ubicación</option>
-                                <option value="Oxigen">Oxigen</option>
-                                <option value="Entregado en Obra">Entregado en Obra</option>
-                            </select>
-                            <br><br>
-                        </div> -->
+                        </div>
 
                         <div class="colum3">
 
