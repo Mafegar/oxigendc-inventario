@@ -22,13 +22,14 @@
 
             $_SESSION["username"] = $username;
             if($row["tipo_usuario"] == 1){
-                header("Location: ./inventario_admin.html");
+                header("Location: ./inventario_admin.php");
             } else {
                 header("Location: ./user.html");
             }
 
         } else {
             echo "Usuario o contraseña incorrectos.";
+            header("location: ./index.html");
         }
     }
 

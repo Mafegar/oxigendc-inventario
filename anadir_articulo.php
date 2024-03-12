@@ -4,6 +4,13 @@
     session_start();
     require_once "./conexion_bd/conexion.php";
 
+    if(isset($_SESSION['username'])){
+        $username = $_SESSION['username'];
+    } else {
+        header("location: ./index.html");
+        exit();
+    }
+
     // Hacemos una consulta a la base de datos para obtener los articulos.
     $sql = "SELECT * FROM articulos";
     $result = mysqli_query($conn, $sql);
@@ -22,6 +29,7 @@
         html,body{
             margin: 0;
             padding: 0;
+            font-family: "Raleway", sans-serif;
         }
 
         /* MENU */
@@ -53,14 +61,6 @@
             width: 200px;
         }
 
-        /* CREAR ARTICULO */
-
-        .columnas-crear{
-            /* display: flex;
-            align-items: center;
-            gap: 20px; */
-        }
-
         /* CUERPO */
 
         #cuerpo{
@@ -69,6 +69,11 @@
         }
 
         /* TABLA CREAR ARTICULO */
+
+        .formulario-crear{
+            padding-left: 20px;
+        }
+
         .form-crear label{
             margin-left: 20px;
         }
@@ -77,12 +82,15 @@
             width: 200px;
         }
 
+        #crear_articulo{
+            width: 100px;
+            margin-left: 20px;
+        }
+
         /* MOSTRAR ARTICULOS */
 
         .ver-articulos{
-            /* border: 1px solid black; */
             width: 1000px;
-            /* margin: auto; */
         }
         
 
@@ -94,6 +102,20 @@
         .ver-articulos table th, td{
             border: 1px solid black;
             padding: 8px;
+        }
+
+        /* HACER ENTRADA */
+
+        .titulo-entrada, .titulo-salida, .titulo-crear-articulo{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .titulo-entrada button, .titulo-salida button, .titulo-crear-articulo button{
+            height: 25px;
+            background-color: red;
+            color: white;
         }
 
 
@@ -109,11 +131,17 @@
         </div>
         <nav>
             <ul>
-                <li><a href="./inventario_admin.html">Inicio</a></li>
-                <li><a href="">Crear Usuarios</a></li>
-                <li><a href="./anadir_articulo.php">Gestionar Inventario</a></li>
-                <li><a href="">Entradas y Salidas</a></li>
+                <li><a href="./inventario_admin.php">Inicio</a></li>
+                <li><a href="">Usuarios</a></li>
+                <li><a href="./anadir_articulo.php">Inventario</a>
+                    <!-- <ul>
+                        <li><a href="">Entradas</a></li>
+                        <li><a href="">Salidas</a></li>
+                    </ul> -->
+                </li>
+                
                 <li><a href="">Historial de Movimientos</a></li>
+                <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
@@ -122,10 +150,24 @@
     <div id="cuerpo">   
 
         <div class="container">
+        
+            <h1>Articulos actuales en el Inventario</h1>
 
-            <h1>Crear Articulo</h1>
+            <form action="" method="post">
+                <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
 
-            <div class="formulario-crear">
+                <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+
+                <input type="button" name="salida" id="salida" value="Salida de Articulos">
+            </form>
+            <br>
+
+            <dialog id="formulario-crear">
+
+                <div class="titulo-crear-articulo">
+                    <h2>Crear Articulo</h2>
+                    <button id="cerrar-crear-articulo">X</button>
+                </div>
 
                 <form class="form-crear" action="crear_articulos.php" method="post">
 
@@ -192,25 +234,26 @@
                     <input type="submit" name="crear_articulo" id="crear_articulo" value="Crear Articulo">
                 </form>
 
-            </div>
-        
-            <h2>Articulos actuales en el Inventario</h2>
-
-            <form action="" method="post">
-                <input type="button" name="entrada" id="entrada" value="Hacer Entrada">
-
-                <input type="button" name="salida" id="salida" value="Hacer Salida">
-            </form>
+            </dialog>
 
             <dialog id="entrada-articulo">
-                <button id="cerrar-entrada">X</button>
-                <h1>Entrada Articulo</h1>
+                <div class="titulo-entrada">
+                    <h2>Entrada Articulo</h2>
+                    <button id="cerrar-entrada">X</button>
+                </div>
 
-                <form class="form-entrada" action="" method="post">
-
-                    <label for="fecha-oper">Fecha Entrada: </label>
-                    <input type="date" name="fecha-oper" id="fecha-oper">
+                <form class="form-entrada" action="crear_articulos.php" method="post">
+                    
+                    <label for="nombre-entr">Nombre Articulo: </label>
+                    <input type="text" name="nombre-entr" id="nombre-entr" placeholder="Nomber del Articulo" required>
                     <br><br>
+                    <label for="unidades-entr">Unidades: </label>
+                    <input type="number" name="unidades-entr" id="unidades-entr" placeholder="Cantidadl Articulo" required>
+                    <br><br>
+                    <label for="fecha-oper-entr">Fecha Entrada: </label>
+                    <input type="date" name="fecha-oper-entr" id="fecha-oper-entr" >
+                    <br><br>
+                    <input type="submit" name="hacer-entrada" id="hacer-entrada" value="Guardar Entrada" required>
 
                 </form>
 
@@ -218,10 +261,26 @@
             </dialog>
 
             <dialog id="salida-articulo">
-                <button id="cerrar-salida">X</button>
-                <h1>Salida Articulo</h1>
+                <div class="titulo-salida">
+                    <h2>Salida Articulo</h2>
+                    <button id="cerrar-salida">X</button>
+                </div>
 
-                
+                <form class="form-salida" action="crear_articulos.php" method="post">
+                    
+                    <label for="nombre-sali">Nombre Articulo: </label>
+                    <input type="text" name="nombre-sali" id="nombre-sali" placeholder="Nomber del Articulo" required>
+                    <br><br>
+                    <label for="unidades-sali">Unidades: </label>
+                    <input type="number" name="unidades-sali" id="unidades-sali" placeholder="Cantidadl Articulo" required>
+                    <br><br>
+                    <label for="fecha-oper-sali">Fecha Entrada: </label>
+                    <input type="date" name="fecha-oper-sali" id="fecha-oper-sali" >
+                    <br><br>
+                    <input type="submit" name="hacer-salida" id="hacer-salida" value="Guardar Salida" required>
+
+                </form>
+
             </dialog>
 
             <div class="ver-articulos">
@@ -272,14 +331,20 @@
 
     <script>
 
+        // Botones para abrir los dialogos.
         const hacerEntrada = document.querySelector("#entrada");
         const hacerSalida = document.querySelector("#salida");
+        const hacerArticulo = document.querySelector("#crear-articulo");
 
+        // Botones para cerrar los dialogos.
         const btnCerrarEntrada = document.querySelector("#cerrar-entrada");
         const btnCerrarSalida = document.querySelector("#cerrar-salida");
+        const btnCrearArticulo = document.querySelector("#cerrar-crear-articulo");
 
+        // Dialogos.
         const entradaArticulo = document.querySelector("#entrada-articulo");
         const salidaArticulo = document.querySelector("#salida-articulo");
+        const crearArticulo = document.querySelector("#formulario-crear");
 
         hacerEntrada.addEventListener("click", () => {
             entradaArticulo.showModal();
@@ -295,6 +360,14 @@
 
         btnCerrarSalida.addEventListener("click", () => {
             salidaArticulo.close();
+        });
+
+        hacerArticulo.addEventListener("click", () => {
+            crearArticulo.showModal();
+        });
+
+        btnCrearArticulo.addEventListener("click", () => {
+            crearArticulo.close();
         });
 
         // Obtener referencia al select y al div oculto
