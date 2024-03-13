@@ -17,8 +17,7 @@
         // Obtenemos la fila correspondiente a la consulta.
         $row = mysqli_fetch_assoc($result);
 
-        // Verificamos si la contraseña ingresada es igual a la contraseña almacenada en la base de datos.
-        if($password === $row["password"]){
+        if(password_verify($password,$row["password"])){
 
             $_SESSION["username"] = $username;
             if($row["tipo_usuario"] == 1){

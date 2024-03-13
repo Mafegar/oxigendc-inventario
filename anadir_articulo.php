@@ -4,6 +4,7 @@
     session_start();
     require_once "./conexion_bd/conexion.php";
 
+    // Verificamos si el usuario ha iniciado sesión.
     if(isset($_SESSION['username'])){
         $username = $_SESSION['username'];
     } else {
@@ -14,6 +15,18 @@
     // Hacemos una consulta a la base de datos para obtener los articulos.
     $sql = "SELECT * FROM articulos";
     $result = mysqli_query($conn, $sql);
+
+    // Barra de navegación para buscar un articulo.
+    if(isset($_POST["boton-buscar"])){
+        $busuqeda = $_POST["barra-buscar"];
+
+        // Hacemos una consulta a la base de datos para obtener los articulos.
+        $sqlBuscarArticulo = "SELECT * FROM articulos WHERE nombre LIKE '%$busuqeda%'";
+        $result = mysqli_query($conn, $sqlBuscarArticulo);
+        
+    }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +35,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Gestionar Inventario</title>
+    <title>Inventario</title>
 
     <style>
         
@@ -104,7 +117,24 @@
             padding: 8px;
         }
 
-        /* HACER ENTRADA */
+        /* FUNCIONES DE ARTICULOS */
+
+        .funciones-articulos{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .botones-acciones{
+            display: flex;
+            gap: 10px;
+        }
+
+        #barra-buscar{
+            width: 205px;
+        }
+
+
+        /* HACER ENTRADA Y SALIDAS*/
 
         .titulo-entrada, .titulo-salida, .titulo-crear-articulo{
             display: flex;
@@ -132,7 +162,7 @@
         <nav>
             <ul>
                 <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="">Usuarios</a></li>
+                <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="./anadir_articulo.php">Inventario</a>
                     <!-- <ul>
                         <li><a href="">Entradas</a></li>
@@ -153,12 +183,19 @@
         
             <h1>Articulos actuales en el Inventario</h1>
 
-            <form action="" method="post">
-                <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
+            <form class="funciones-articulos" action="" method="post">
+                <div class="buscador">
+                    <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
+                    <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
+                </div>
 
-                <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+                <div class="botones-acciones">
+                    <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
 
-                <input type="button" name="salida" id="salida" value="Salida de Articulos">
+                    <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+
+                    <input type="button" name="salida" id="salida" value="Salida de Articulos">
+                </div>
             </form>
             <br>
 
@@ -169,7 +206,7 @@
                     <button id="cerrar-crear-articulo">X</button>
                 </div>
 
-                <form class="form-crear" action="crear_articulos.php" method="post">
+                <form class="form-crear" action="admin_articulos.php" method="post">
 
                     <div class="columnas-crear">
                         <div class="colum1">
@@ -238,11 +275,11 @@
 
             <dialog id="entrada-articulo">
                 <div class="titulo-entrada">
-                    <h2>Entrada Articulo</h2>
+                    <h2>Crear Usuarios</h2>
                     <button id="cerrar-entrada">X</button>
                 </div>
 
-                <form class="form-entrada" action="crear_articulos.php" method="post">
+                <form class="form-entrada" action="admin_articulos.php" method="post">
                     
                     <label for="nombre-entr">Nombre Articulo: </label>
                     <input type="text" name="nombre-entr" id="nombre-entr" placeholder="Nomber del Articulo" required>
@@ -266,7 +303,7 @@
                     <button id="cerrar-salida">X</button>
                 </div>
 
-                <form class="form-salida" action="crear_articulos.php" method="post">
+                <form class="form-salida" action="admin_articulos.php" method="post">
                     
                     <label for="nombre-sali">Nombre Articulo: </label>
                     <input type="text" name="nombre-sali" id="nombre-sali" placeholder="Nomber del Articulo" required>
@@ -299,6 +336,8 @@
                         </tr>
                     </thead>
                     <tbody>
+
+
                         <?php
                             // Verificamos si hay articulos en la base de datos.
                             if($result->num_rows > 0){
