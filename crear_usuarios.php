@@ -20,21 +20,23 @@
     // Barra de búsqueda de usuarios.
     if(isset($_POST["boton-buscar"])){
         $buscarUsuario = $_POST["barra-buscar"];
+        $tipoUsuario = $_POST["buscar-tipo-user"];
 
         // Consultamos a la base de datos para obtener los datos del usuario.
-        $sqlBuscarUsuario = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%'";
-        $result = mysqli_query($conn, $sqlBuscarUsuario);
+        $sqlBuscarUsuarioNombre = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%' OR segundo_apellido LIKE '%$buscarUsuario%'";
+        $result = mysqli_query($conn, $sqlBuscarUsuarioNombre);
+        $sqlBuscarUsuarioTipo = "SELECT * FROM usuarios WHERE tipo_usuario LIKE '%$tipoUsuario%'";
+        $result = mysqli_query($conn, $sqlBuscarUsuarioTipo);
+        
     }
 
+    // Consulta para Modificar Usuario.
+    $sqlModificarUsuario = "SELECT * FROM usuarios";
+    $resultModificar = mysqli_query($conn, $sqlModificarUsuario);
+
+    // Consulta para Eliminar Usuario.
     $sqlEliminarUsuario = "SELECT * FROM usuarios";
     $resultEliminar = mysqli_query($conn, $sqlEliminarUsuario);
-
-    if(isset($_POST["eliminar_usuario"])){
-        $eliminarUsuario = $_POST["eliminar_usuario"];
-
-        $sqlEliminar = "DELETE FROM usuarios WHERE username = '$eliminarUsuario'";
-        $resultEliminar = mysqli_query($conn, $sqlEliminar);
-    }
 
 ?>
 
@@ -113,32 +115,105 @@
             padding-left: 20px;
         }
 
-        .form-crear label{
+        .form-crear label, .form-modif label{
             margin-left: 20px;
         }
 
-        .form-crear input,º{
+        .form-crear input{
             width: 200px;
         }
 
-        #btn-crear-usuario{
+        #btn-crear-usuario, #btn-modificar-usuario{
             width: 100px;
+            margin-top: 15px;
             margin-left: 20px;
+            display: block !important;
         }
 
-        /* MODIFICAR Y ELIMINAR*/
+        /* CREAR / MODIFICAR / ELIMINAR */
+
+        #formulario-usuarios{
+            padding: 30px;
+        }
 
         .titulo-crear-usuario{
+            width: 670px;
+            margin: auto;
+        }
+
+        .titulo-crear-usuario,.titulo-eliminar, .titulo-modificar{
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .titulo-crear-usuario button{
+        .titulo-crear-usuario button, .titulo-eliminar button, .titulo-modificar button{
             height: 25px;
             background-color: red;
             color: white;
+            border-radius: 5px;
         }
+
+        .mod-usuario{
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .botones-modificar{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .boton-contra{
+            display: flex;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .boton-contra label{
+            margin-left: 5px;
+        }
+
+        #eliminar-usuarios{
+            width: 320px;
+        }
+
+        #eliminar-usuarios span{
+            font-weight: 200;
+        }
+
+        #eliminar-usuarios input{
+            width: 70px;
+            height: 25px;
+            background-color: red;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #eliminar-usuarios form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .usuarios{
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .usuarios-info h4{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        
 
         /* MOSTRAR USUARIOS */
 
@@ -193,7 +268,14 @@
             <form class="funciones-usuarios" action="" method="post">
                 <div class="buscador">
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
+                    <select name="buscar-tipo-user" id="buscar-tipo-user">
+                        <option value="">Tipo de Usuario</option>
+                        <option value="1">1 = Administrador</option>
+                        <option value="0">0 = Usuario</option>
+                    </select>
                     <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
+
+                    
                 </div>
 
                 <div class="botones-acciones">
@@ -241,11 +323,72 @@
                 </form>
 
             </dialog>
-            
-            <dialog id="modificar-articulos">
 
+            
+            <dialog id="modificar-usuarios">
+
+                <div class="titulo-modificar">
+                    <h2>Modificar Usuarios</h2>
+                    <button id="cerrar-modificar-usuario">X</button>
+                </div>
+
+                <div class="formulario-modificar">
+
+                    <?php
+
+                        // Verificamos si hay usuarios en la base de datos.
+                        if($resultModificar -> num_rows > 0){
+
+                            // Recorremos la base de datos para mostrar los usuarios.
+                            while($row = $resultModificar -> fetch_assoc()){
+                                echo "<div class='mod-usuario'>";
+                                    echo "<form class='form-modif' action='admin_articulos.php' method='post'>";
+                                        echo "<label for='nombre'>Nombre: </label>";
+                                        echo "<input type='text' name='nombre' id='nombre' value='". $row["nombre"] ."' required>";
+
+                                        echo "<label for='tipo_usuario'>Tipo de Usuario: </label>";
+                                        echo "<input type='text' name='tipo_usuario' id='tipo_usuario' value='". $row["tipo_usuario"] ."' required>";
+                                        echo "<br><br>";
+                                        echo "<label for='primer_apellid'>Primer Apellido: </label>";
+                                        echo "<input type='text' name='primer_apellido' id='primer_apellido' value='". $row["primer_apellido"] ."' required>";
+
+                                        echo "<label for='segundo_apellid'>Segundo Apellido: </label>";
+                                        echo "<input type='text' name='segundo_apellido' id='segundo_apellido' value='". $row["segundo_apellido"] ."' required>";
+                                        echo "<br><br>";
+
+                                        echo "<label for='user'>Nombre de Usuario: </label>";
+                                        echo "<input type='text' name='user' id='user' value='". $row["username"] ."' required>";
+
+                                        echo "<label for='pass'>Nueva Contraseña: </label>";
+                                        echo "<input type='text' name='pass' id='pass' placeholder='Nueva contraseña (Opcional)'>";
+
+                                        echo "<input type='hidden' name='id_usuario' value='" . $row["id_Usuario"] . "'>";
+                                        echo "<div class='botones-modificar'>";
+                                            echo "<input type='submit' name='modificar_usuario' id='btn-modificar-usuario' value='Modificar'>";
+                                            echo "<div class='boton-contra'>";
+                                                echo "<input type='hidden' name='cambio_contra' value='0'>";
+                                                echo "<input type='checkbox' id='cambio_contra_marcador' name='cambio_contra' value='1'>";
+                                                echo "<label for='cambio_contra_marcador'>Cambiar Contraseña</label>";
+                                            echo "</div>";
+                                        echo "</div>";
+                                    echo "</form>";
+
+
+                                echo "</div>";
+                            }
+
+
+                        }
+
+
+                    ?>
+
+
+
+                </div>
 
             </dialog>
+
 
             <dialog id="eliminar-usuarios">
 
@@ -261,12 +404,14 @@
                         // Hacemos un bucle para mostrar todos los usuarios de la BBDD.
                         while($row = $resultEliminar->fetch_assoc()){
                             echo "<div class='usuarios'>";
-                            echo "<form action='' method='post'>";
-                            echo "<h4>" . $row["nombre"] . " " . $row["primer_apellido"] . "</h4>";
-                            echo "<h4>". $row["username"] ." " . $row["tipo_usuario"] ."</h4>";
-                            echo "<input type='hidden' name='nombre_usuario' value='" . $row["username"] . "'>";
-                            echo "<input type='submit' name='eliminar_usario' value='Eliminar'>";
-                            echo "</form>";
+                                echo "<form action='admin_articulos.php' method='post'>";
+                                    echo "<div class='usuarios-info'>";
+                                        echo "<h4> Nombre: <span>" . $row["nombre"] . "</span> <span>" . $row["primer_apellido"] . "</span></h4>";
+                                        echo "<h4> User: <span>". $row["username"] ."</span></h4>";
+                                    echo "</div>";
+                                    echo "<input type='hidden' name='id_usuario' value='" . $row["id_Usuario"] . "'>";
+                                    echo "<input type='submit' name='eliminar_usario' value='Eliminar'>";
+                                echo "</form>";
                             echo "</div>";
                         }
                     } else {
@@ -276,6 +421,8 @@
                 ?>
 
             </dialog>
+
+
 
             <div class="ver-usuarios">
                 <table>
@@ -326,19 +473,20 @@
 
         // Botones para abrir pestañas.
         const btnCrearUsuario = document.getElementById("crear-usuario");
-        // const btnModificarUsuario = document.getElementById("modificar-usuario");
+        const btnModificarUsuario = document.getElementById("modificar-usuario");
         const btnEliminarUsuario = document.getElementById("eliminar-usuario");
 
         // Botones para cerrar pestañas.
         const btnCerrarCrearUsuario = document.getElementById("cerrar-crear-usuario");
-        // const btnCerrarModificarUsuario = document.getElementById("cerrar-modificar-usuario");
+        const btnCerrarModificarUsuario = document.getElementById("cerrar-modificar-usuario");
         const btnCerrarEliminarUsuario = document.getElementById("cerrar-eliminar-usuario");
         
         // Dialogos
         const formularioUsuarios = document.getElementById("formulario-usuarios");
-        // const modificarUsuarios = document.getElementById("modificar-usuarios");
+        const modificarUsuarios = document.getElementById("modificar-usuarios");
         const eliminarUsuarios = document.getElementById("eliminar-usuarios");
 
+        // Evento para abrir y cerrar de crear usuario.
         btnCrearUsuario.addEventListener("click", () => {
             formularioUsuarios.showModal();
         });
@@ -346,8 +494,17 @@
         btnCerrarCrearUsuario.addEventListener("click", () => {
             formularioUsuarios.close();
         });
-        
 
+        // Evento para abrir y cerrar de modificar usuario.
+        btnModificarUsuario.addEventListener("click", () => {
+            modificarUsuarios.showModal();
+        });
+
+        btnCerrarModificarUsuario.addEventListener("click", () => {
+            modificarUsuarios.close();
+        });
+        
+        // Evento para abrir y cerrar de eliminar usuario.
         btnEliminarUsuario.addEventListener("click", () => {
             eliminarUsuarios.showModal();
         });

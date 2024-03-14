@@ -128,5 +128,61 @@
     }
 
 
+    // Modificar usuarios de la base de datos.
+    if(isset($_POST["modificar_usuario"])){
+        $id_usuario = $_POST["id_usuario"];
+        $nombre = $_POST["nombre"];
+        $primer_apellido = $_POST["primer_apellido"];
+        $segundo_apellido = $_POST["segundo_apellido"];
+        $username = $_POST["user"];
+        $nuevo_password = $_POST["pass"];
+        $tipo_usuario = $_POST["tipo_usuario"];
+
+        if(isset($_POST["cambio_contra"])){
+            $cambio_contra = $_POST["cambio_contra"]; 
+        } else {
+            $cambio_contra = 0;
+        }
+
+        // Verificamos si se a solicitado un cambio de contraseña.
+        if($cambio_contra == 1){
+            $password = password_hash($nuevo_password, PASSWORD_DEFAULT);
+
+            // Actualizar los datos del usuario en la base de datos junto a la contraseña.
+            $sql = "UPDATE usuarios SET nombre = '$nombre', primer_apellido = '$primer_apellido', segundo_apellido = '$segundo_apellido', username = '$username', password = '$password', tipo_usuario = '$tipo_usuario' WHERE id_Usuario = '$id_usuario'";
+
+        } else {
+            // Actualizar los datos del usuario en la base de datos sin la contraseña.
+            $sql = "UPDATE usuarios SET nombre = '$nombre', primer_apellido = '$primer_apellido', segundo_apellido = '$segundo_apellido', username = '$username', tipo_usuario = '$tipo_usuario' WHERE id_Usuario = '$id_usuario'";
+        }
+       
+
+        if($conn->query($sql) === TRUE){
+            header("Location: crear_usuarios.php");
+            exit();
+        } else {
+            echo "Error al modificar el usuario: " . $conn->error;
+        }
+    }
+
+
+    // Eliminar usuarios de la base de datos.
+    if(isset($_POST["eliminar_usario"])){
+        $id_usuario = $_POST["id_usuario"];
+
+        $sql = "DELETE FROM usuarios WHERE id_Usuario = '$id_usuario'";
+
+        if($conn->query($sql) === TRUE){
+            header("Location: crear_usuarios.php");
+            exit();
+        } else {
+            echo "Error al eliminar el usuario: " . $conn->error;
+        }
+
+    }
+
+
+
+
 
 ?>
