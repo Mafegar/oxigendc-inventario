@@ -253,7 +253,7 @@
                     </ul> -->
                 </li>
                 
-                <li><a href="">Historial de Movimientos</a></li>
+                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>

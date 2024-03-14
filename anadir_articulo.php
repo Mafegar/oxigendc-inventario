@@ -26,6 +26,14 @@
         
     }
 
+    // Hacemos una consulta a la base de datos para obtener los articulos y hacer entradas.
+    $sqlHacerEntrada = "SELECT * FROM articulos";
+    $resultHacerEntrada = mysqli_query($conn, $sqlHacerEntrada);
+
+    // Hacemos una consulta a la base de datos para obtener los articulos y hacer Salidas.
+    $sqlHacerSalida = "SELECT * FROM articulos";
+    $resultHacerSalida = mysqli_query($conn, $sqlHacerSalida);
+
     
 ?>
 
@@ -170,7 +178,7 @@
                     </ul> -->
                 </li>
                 
-                <li><a href="">Historial de Movimientos</a></li>
+                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
@@ -282,7 +290,13 @@
                 <form class="form-entrada" action="admin_articulos.php" method="post">
                     
                     <label for="nombre-entr">Nombre Articulo: </label>
-                    <input type="text" name="nombre-entr" id="nombre-entr" placeholder="Nomber del Articulo" required>
+                    <select name='nombre-entr' id='nombre-entr' required>;
+                        <?php
+                            while($row = mysqli_fetch_assoc($resultHacerEntrada)){
+                                    echo "<option value='" . $row["nombre"] . "'>" . $row["nombre"] . "</option>";
+                            }   
+                        ?>
+                    </select>
                     <br><br>
                     <label for="unidades-entr">Unidades: </label>
                     <input type="number" name="unidades-entr" id="unidades-entr" placeholder="Cantidadl Articulo" required>
@@ -306,7 +320,13 @@
                 <form class="form-salida" action="admin_articulos.php" method="post">
                     
                     <label for="nombre-sali">Nombre Articulo: </label>
-                    <input type="text" name="nombre-sali" id="nombre-sali" placeholder="Nomber del Articulo" required>
+                    <select name='nombre-sali' id='nombre-sali' required>;
+                        <?php
+                            while($row = mysqli_fetch_assoc($resultHacerSalida)){
+                                    echo "<option value='" . $row["nombre"] . "'>" . $row["nombre"] . "</option>";
+                            }   
+                        ?>
+                    </select>
                     <br><br>
                     <label for="unidades-sali">Unidades: </label>
                     <input type="number" name="unidades-sali" id="unidades-sali" placeholder="Cantidadl Articulo" required>

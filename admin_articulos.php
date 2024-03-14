@@ -62,10 +62,22 @@
         // Actualizamos las unidades del articulo en la tabla de articulos.
         $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades + $unidades_entr WHERE nombre = '$nombre_entr'";
 
+        // Comprobamos si se ha realizado la entrada en la tabla de entradas.
         if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-            echo "Entrada realizada con éxito.";
-            header("Location: anadir_articulo.php");
-            exit();
+            
+            // Insertamos la entrada que hacemos en la tabla de movimientos.
+            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
+                VALUES ('Entrada', '$nombre_entr', '$unidades_entr', '$fecha_entr', '$nombre_usuario_entr')";
+
+            // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
+            if($conn->query($sqlMovimiento) === TRUE){
+                echo "Entrada realizada con éxito.";
+                header("Location: anadir_articulo.php");
+                exit();
+            } else {
+                echo "Error al realizar la entrada: " . $conn->error;
+            }
+
         } else {
             echo "Error al realizar la entrada: " . $conn->error;
         }
@@ -95,15 +107,23 @@
         $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
 
         if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-            echo "Salida realizada con éxito.";
-            header("Location: anadir_articulo.php");
-            exit();
+            
+            // Insertamos la entrada que hacemos en la tabla de movimientos.
+            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
+                VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+
+            // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
+            if($conn->query($sqlMovimiento) === TRUE){
+                echo "Salida realizada con éxito.";
+                header("Location: anadir_articulo.php");
+                exit();
+            } else {
+                echo "Error al realizar la salida: " . $conn->error;
+            }
         } else {
             echo "Error al realizar la salida: " . $conn->error;
         }
     }
-
-    
     /**------------------------------------------------------------------------ */
 
     // Crear Usuarios y añadirlos a la base de datos.

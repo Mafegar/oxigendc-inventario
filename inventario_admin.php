@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- <link rel="stylesheet" href="./styles/inventario_admin.css"> -->
-    <title>Document</title>
+    <title>Inventario</title>
 
     <style>
         html,body{
@@ -73,7 +73,7 @@
                 <li><a href="./inventario_admin.php">Inicio</a></li>
                 <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="./anadir_articulo.php">Inventario</a></li>
-                <li><a href="">Historial de Movimientos</a></li>
+                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
