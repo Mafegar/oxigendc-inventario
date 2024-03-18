@@ -1,13 +1,14 @@
 
+
 <?php
 
     session_start();
     require_once("../../conexion_bd/conexion.php");
 
-    if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
+    if(isset($_SESSION['username'])){
         $username = $_SESSION['username'];
     } else {
-        header("location ./index.html");
+        header("location ../../index.html");
         exit();
     }
 
@@ -66,13 +67,12 @@
 
     <header>
         <div class="logo">
-            <img src="../../img/logo-oxigen.png" alt="">
+            <a href="./inventario_user.php"><img src="../../img/logo-oxigen.png" alt=""></a>
         </div>
         <nav>
             <ul>
-                <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a></li>
+                <li><a href="./inventario_user.php">Inicio</a></li>
+                <li><a href="./anadir_articulo_user.php">Inventario</a></li>
                 <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>

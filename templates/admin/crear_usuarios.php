@@ -21,13 +21,25 @@
     // Barra de búsqueda de usuarios.
     if(isset($_POST["boton-buscar"])){
         $buscarUsuario = $_POST["barra-buscar"];
-        // $tipoUsuario = $_POST["buscar-tipo-user"];
+        $tipoUsuario = $_POST["buscar-tipo-user"];
 
-        // Consultamos a la base de datos para obtener los datos del usuario.
-        $sqlBuscarUsuarioNombre = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%' OR segundo_apellido LIKE '%$buscarUsuario%' OR tipo_usuario LIKE '%$buscarUsuario%'";
-        $result = mysqli_query($conn, $sqlBuscarUsuarioNombre);
-        // $sqlBuscarUsuarioTipo = "SELECT * FROM usuarios WHERE tipo_usuario LIKE '%$tipoUsuario%'";
-        // $result = mysqli_query($conn, $sqlBuscarUsuarioTipo);
+        if($tipoUsuario == "Admin"){
+            // Consultamos a la base de datos para obtener los usuarios administradores.
+            $sqlBuscarAdmin = "SELECT * FROM usuarios WHERE tipo_usuario = 1 ";
+            $result = mysqli_query($conn, $sqlBuscarAdmin);
+
+        } else if($tipoUsuario == "Users"){
+            // Consultamos a la base de datos para obtener los usuarios normales.
+            $sqlBuscarUsuario = "SELECT * FROM usuarios WHERE tipo_usuario = 0";
+            $result = mysqli_query($conn, $sqlBuscarUsuario);
+        
+        } else {
+            // Consultamos a la base de datos para obtener los datos del usuario.
+            $sqlBuscarUsuarioNombre = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%' OR segundo_apellido LIKE '%$buscarUsuario%'";
+            $result = mysqli_query($conn, $sqlBuscarUsuarioNombre);
+        }
+
+
         
     }
 
@@ -241,21 +253,16 @@
 
     <header>
         <div class="logo">
-            <a href="./inventario_admin.html"><img src="./img/logo-oxigen.png" alt=""></a>
+            <a href="./inventario_admin.html"><img src="../../img/logo-oxigen.png" alt=""></a>
         </div>
         <nav>
             <ul>
                 <li><a href="./inventario_admin.php">Inicio</a></li>
                 <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a>
-                    <!-- <ul>
-                        <li><a href="">Entradas</a></li>
-                        <li><a href="">Salidas</a></li>
-                    </ul> -->
-                </li>
+                <li><a href="./anadir_articulo.php">Inventario</a></li>
                 
-                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+                <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
+                <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
@@ -269,11 +276,11 @@
             <form class="funciones-usuarios" action="" method="post">
                 <div class="buscador">
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
-                    <!-- <select name="buscar-tipo-user" id="buscar-tipo-user">
+                    <select name="buscar-tipo-user" id="buscar-tipo-user">
                         <option value="">Tipo de Usuario</option>
-                        <option value="1">1 = Administrador</option>
-                        <option value="0">0 = Usuario</option>
-                    </select> -->
+                        <option value="Admin">Administrador</option>
+                        <option value="Users">Usuario</option>
+                    </select>
                     <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
 
                     

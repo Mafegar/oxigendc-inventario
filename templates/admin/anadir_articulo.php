@@ -34,6 +34,14 @@
     $sqlHacerSalida = "SELECT * FROM articulos";
     $resultHacerSalida = mysqli_query($conn, $sqlHacerSalida);
 
+    // Hacemos una consulta a la base de datos para obtener los articulos y poder Modificarlos.
+    $sqlModificarArticulo = "SELECT * FROM articulos";
+    $resultModificarArticulo = mysqli_query($conn, $sqlModificarArticulo);
+
+    // Hacemos una consulta a la base de datos para obtener los articulos y poder Eliminarlos.
+    $sqlEliminarArticulo = "SELECT * FROM articulos";
+    $resultEliminarArticulo = mysqli_query($conn, $sqlEliminarArticulo);
+
     
 ?>
 
@@ -144,16 +152,54 @@
 
         /* HACER ENTRADA Y SALIDAS*/
 
-        .titulo-entrada, .titulo-salida, .titulo-crear-articulo{
+        .titulo-entrada, .titulo-salida, .titulo-crear-articulo, .titulo-eliminar, .titulo-modificar{
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .titulo-entrada button, .titulo-salida button, .titulo-crear-articulo button{
+        .titulo-entrada button, .titulo-salida button, .titulo-crear-articulo button, .titulo-eliminar button, .titulo-modificar button{
             height: 25px;
             background-color: red;
             color: white;
+        }
+
+        /* TABLA PARA PODER BORRAR ARTICULOS */
+
+        #eliminar-articulo{
+            width: 500px;
+        }
+
+        #eliminar-articulo span{
+            font-weight: 200;
+        }
+
+        #eliminar-articulo input{
+            width: 120px;
+            height: 25px;
+            background-color: red;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #eliminar-articulo form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .articulo-eliminar{
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .articulo-info h4{
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
 
@@ -165,21 +211,15 @@
 
     <header>
         <div class="logo">
-            <a href="./inventario_admin.html"><img src="./img/logo-oxigen.png" alt=""></a>
+            <a href="./inventario_admin.html"><img src="../../img/logo-oxigen.png" alt=""></a>
         </div>
         <nav>
             <ul>
                 <li><a href="./inventario_admin.php">Inicio</a></li>
                 <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a>
-                    <!-- <ul>
-                        <li><a href="">Entradas</a></li>
-                        <li><a href="">Salidas</a></li>
-                    </ul> -->
-                </li>
-                
-                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="./conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+                <li><a href="./anadir_articulo.php">Inventario</a></li>
+                <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
+                <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
@@ -203,6 +243,10 @@
                     <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
 
                     <input type="button" name="salida" id="salida" value="Salida de Articulos">
+
+                    <input type="button" name="modificar" id="modificar" value="Modificar Articulo">
+
+                    <input type="button" name="eliminar" id="eliminar" value="Eliminar Articulo">
                 </div>
             </form>
             <br>
@@ -340,6 +384,125 @@
 
             </dialog>
 
+            <dialog id="eliminar-articulo">
+
+                <div class="titulo-eliminar">
+                    <h2>Eliminar Articulo</h2>
+                    <button id="cerrar-eliminar">X</button>
+                </div>
+
+                <?php
+
+                    if($resultEliminarArticulo->num_rows > 0){
+                        
+                        while($row = $resultEliminarArticulo -> fetch_assoc()){
+                            echo "<div class='articulo-eliminar'>";
+                                echo "<form action='admin_articulos.php' method='post'>";
+                                    echo "<div class='articulo-info'>";
+                                        echo "<h4> Articulo: <span>" . $row["nombre"] . "</span></h4>";
+                                        echo "<h4> Tipo Producto: <span>" . $row["tipo_producto"] . "</span></h4>";
+                                        echo "<h4> Ubicación: <span>" . $row["ubicacion"] . "</span></h4>";
+                                        echo "<h4> Unidades: <span>" . $row["unidades"] . "</span></h4>";
+                                    echo "</div>";
+                                    echo "<input type='hidden' name='id_articulo' value='" . $row["id_Articulo"] . "'>";
+                                    echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo' value='Eliminar Articulo'>";
+                                echo "</form>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p>No hay articulos</p>";
+                    }
+
+                ?>
+
+            </dialog>
+
+            <dialog id="modificar-articulo">
+
+                <div class="titulo-modificar">
+                    <h2>Modificar Articulo</h2>
+                    <button id="cerrar-modificar">X</button>
+                </div>
+
+                <div class="formulario-modificar">
+
+                    <?php
+
+                        if($resultModificarArticulo->num_rows > 0){
+                            
+                            while($row = $resultModificarArticulo -> fetch_assoc()){
+
+                                echo "<div class='mod-articulo'>";
+                                    echo "<form class='form-modif' action='admin_articulos.php' method='post'>";
+                                        echo "<br><br>";
+                                        echo "<label for='nombre'>Nombre: </label>";
+                                        echo "<input type='text' name='nombre' id='nombre' value='". $row["nombre"] ."'>";
+
+                                        echo "<label for='marca'>Marca: </label>";
+                                        echo "<input type='text' name='marca' id='marca' value='". $row["marca"] ."'>";
+
+                                        echo "<label for='modelo'>Modelo: </label>";
+                                        echo "<input type='text' name='modelo' id='modelo' value='". $row["modelo"] ."'>";
+                                        echo "<br><br>";
+
+                                        echo "<label for='detalles'>Detalles: </label>";
+                                        echo "<input type='text' name='detalles' id='detalles' value='". $row["detalles"] ."'>";
+
+                                        echo "<label for='tipo_producto_mod'>Tipo de Producto: </label>";
+                                        echo "<select name='tipo_producto_mod' id='tipo_producto_mod'>";
+                                            echo "<option value='" .$row["tipo_producto"]. "'> Escoja una Opcion</option>";
+                                            echo "<option value='Equipo'>Equipo</option>";
+                                            echo "<option value='Kit Maleta'>Kit Maleta</option>";
+                                            echo "<option value='Herramienta'>Herramienta</option>";
+                                        echo "</select>";
+                                        echo "<br><br>";
+
+                                        echo "<div class='fecha-control-inicio-mod' style='display: none;'>";
+                                            echo "<label for='fecha_control_inicio_mod'>Fecha Control: </label>";
+                                            echo "<input type='date' name='fecha_control_inicio_mod' id='fecha_control_inicio_mod' value='". $row["fecha_control"] ."'>";
+                                            echo "<br><br>";
+                                        echo "</div>";
+                                        echo "<div class='fecha-control-final-mod' style='display: none;'>";
+                                            echo "<label for='fecha_control_final_mod'>Fecha Sigiente Control: </label>";
+                                            echo "<input type='date' name='fecha_control_final_mod' id='fecha_control_final_mod'>";
+                                            echo "<br><br>";
+                                        echo "</div>";
+
+                                        echo "<label for='ubi'>Ubicación: </label>";
+                                        echo "<select name='ubi' id='ubi'>";
+                                            echo "<option value='Oxigen'>Oxigen</option>";
+                                            echo "<option value='Entregado en Obra'>Entregado en Obra</option>";
+                                        echo "</select>";
+
+                                        echo "<label for='proveedor'>Proveedor: </label>";
+                                        echo "<input type='text' name='proveedor' id='proveedor' value='". $row["proveedor"] ."'>";
+
+                                        echo "<label for='unidades'>Unidades: </label>";
+                                        echo "<input type='number' name='unidades' id='unidades' value='". $row["unidades"] ."'>";
+
+                                        echo "<label for='tipo_articulo'>Tipo de Articulo: </label>";
+                                        echo "<select name='tipo_articulo' id='tipo_articulo'>";
+                                            echo "<option value='Activo'>Activo</option>";
+                                            echo "<option value='Passivo'>Passivo</option>";
+                                        echo "</select>";
+                                        echo "<br><br>";
+
+                                        echo "<input type='submit' name='modificar-articulo' id='modificar-articulo' value='Modificar Articulo'>";
+
+                                    echo "</form>"; 
+                                echo "</div>";
+
+                            }
+                            
+                        }
+
+                    ?>
+
+                </div>
+
+
+            </dialog>
+
             <div class="ver-articulos">
                 <table>
                     <thead>
@@ -410,33 +573,43 @@
         const hacerEntrada = document.querySelector("#entrada");
         const hacerSalida = document.querySelector("#salida");
         const hacerArticulo = document.querySelector("#crear-articulo");
+        const articuloEliminado = document.querySelector("#eliminar");
+        const articuloModificar = document.querySelector("#modificar");
+
 
         // Botones para cerrar los dialogos.
         const btnCerrarEntrada = document.querySelector("#cerrar-entrada");
         const btnCerrarSalida = document.querySelector("#cerrar-salida");
         const btnCrearArticulo = document.querySelector("#cerrar-crear-articulo");
+        const btnEliminaeArticulo = document.querySelector("#cerrar-eliminar");
+        const btnModificarArticulo = document.querySelector("#cerrar-modificar");
 
         // Dialogos.
         const entradaArticulo = document.querySelector("#entrada-articulo");
         const salidaArticulo = document.querySelector("#salida-articulo");
         const crearArticulo = document.querySelector("#formulario-crear");
-
+        const eliminarArticulo = document.querySelector("#eliminar-articulo");
+        const modificarArticulo = document.querySelector("#modificar-articulo");
+        
+        // Evento para abrir y cerrar el Hacer Entrada.
         hacerEntrada.addEventListener("click", () => {
             entradaArticulo.showModal();
-        });
-
-        hacerSalida.addEventListener("click", () => {
-            salidaArticulo.showModal();
         });
 
         btnCerrarEntrada.addEventListener("click", () => {
             entradaArticulo.close();
         });
 
+        // Evento para abrir y cerrar el Hacer Salida.
+        hacerSalida.addEventListener("click", () => {
+            salidaArticulo.showModal();
+        });
+
         btnCerrarSalida.addEventListener("click", () => {
             salidaArticulo.close();
         });
 
+        // Evento para abrir y cerrar el Crear Articulo.
         hacerArticulo.addEventListener("click", () => {
             crearArticulo.showModal();
         });
@@ -445,10 +618,45 @@
             crearArticulo.close();
         });
 
+        // Evento para abrir y cerrar el Modificar Articulo.
+        articuloModificar.addEventListener("click", () => {
+            modificarArticulo.showModal();
+        });
+
+        btnModificarArticulo.addEventListener("click", () => {
+            modificarArticulo.close();
+        });
+
+        // Evento para abrir y cerrar el Eliminar Articulo.
+        articuloEliminado.addEventListener("click", () => {
+            eliminarArticulo.showModal();
+        });
+
+        btnEliminaeArticulo.addEventListener("click", () => {
+            eliminarArticulo.close();
+        });
+
+
         // Obtener referencia al select y al div oculto
         var selectTipoProducto = document.getElementById('tipo_producto');
         var divFechaControl = document.querySelector('.fecha-control-inicio');
         var divFechaControlFinal = document.querySelector('.fecha-control-final');
+
+        // Agregar un listener de eventos al select para mostrar u ocultar el div según la opción seleccionada
+        selectTipoProducto.addEventListener('change', function() {
+            if (selectTipoProducto.value === 'Equipo') {
+                divFechaControl.style.display = 'block';
+                divFechaControlFinal.style.display = 'block';
+            } else {
+                divFechaControl.style.display = 'none';
+                divFechaControlFinal.style.display = 'none';
+            }
+        });
+
+        // Obtener referencia al select y al div oculto
+        var selectTipoProducto = document.getElementById('tipo_producto_mod');
+        var divFechaControl = document.querySelector('.fecha-control-inicio-mod');
+        var divFechaControlFinal = document.querySelector('.fecha-control-final-mod');
 
         // Agregar un listener de eventos al select para mostrar u ocultar el div según la opción seleccionada
         selectTipoProducto.addEventListener('change', function() {

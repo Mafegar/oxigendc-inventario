@@ -12,33 +12,6 @@
         exit();
     }
 
-    // Añadir los articulos a la base de datos.
-    if(isset($_POST["crear_articulo"])){
-        $nombre = $_POST["nombre"];
-        $marca = $_POST["marca"];
-        $modelo = $_POST["modelo"];
-        $detalles = $_POST["detalles"];
-        $tipo_producto = $_POST["tipo_producto"];
-        $fecha_control = $_POST["fecha_control_inicio"];
-        $fecha_siguiente = $_POST["fecha_control_final"];
-        $ubicacion = $_POST["ubi"];
-        $proveedor = $_POST["proveedor"];
-        $unidades = $_POST["unidades"];
-        $tipo_articulo = $_POST["tipo_articulo"];
-
-        $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-            VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
-
-        if($conn->query($sql) === TRUE){
-            echo "Artículo creado con éxito.";
-            header("Location: anadir_articulo.php");
-            exit();
-        } else {
-            echo "Error al crear el artículo: " . $conn->error;
-        }
-
-    }
-
     
     // Hacer una entrada a la base de datos.
     if(isset($_POST["hacer-entrada"])){
@@ -124,26 +97,6 @@
             echo "Error al realizar la salida: " . $conn->error;
         }
     }
-
-    // Modificar articulos de la base de datos.
-    
-
-    // Eliminar articulos de la base de datos.
-    if(isset($_POST["eliminar-articulo"])){
-        $id_articulo = $_POST["id_articulo"];
-
-        $sql = "DELETE FROM articulos WHERE id_Articulo = '$id_articulo'";
-
-        if($conn->query($sql) === TRUE){
-            header("Location: anadir_articulo.php");
-            exit();
-        } else {
-            echo "Error al eliminar el artículo: " . $conn->error;
-        }
-        
-    }
-
-
     /**------------------------------------------------------------------------ */
 
     // Crear Usuarios y añadirlos a la base de datos.

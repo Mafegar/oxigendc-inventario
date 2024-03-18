@@ -25,7 +25,7 @@
             if($row["tipo_usuario"] == 1){
                 header("Location: ./templates/admin/inventario_admin.php");
             } else {
-                header("Location: ./templates/users/inventario_user.html");
+                header("Location: ./templates/users/inventario_user.php");
             }
 
         } else {
