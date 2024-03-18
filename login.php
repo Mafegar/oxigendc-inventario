@@ -7,7 +7,7 @@
 
 
     if(isset($_POST["iniciar_sesion"])){
-
+        
         $username = $_POST["username"];
         $password = $_POST["password"];
 
@@ -20,10 +20,12 @@
         if(password_verify($password,$row["password"])){
 
             $_SESSION["username"] = $username;
+            $_SESSION["tipo_usuario"] = $row["tipo_usuario"];
+
             if($row["tipo_usuario"] == 1){
-                header("Location: ./inventario_admin.php");
+                header("Location: ./templates/admin/inventario_admin.php");
             } else {
-                header("Location: ./inventario_user.html");
+                header("Location: ./templates/users/inventario_user.html");
             }
 
         } else {
