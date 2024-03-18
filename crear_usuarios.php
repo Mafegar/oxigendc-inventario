@@ -20,13 +20,13 @@
     // Barra de búsqueda de usuarios.
     if(isset($_POST["boton-buscar"])){
         $buscarUsuario = $_POST["barra-buscar"];
-        $tipoUsuario = $_POST["buscar-tipo-user"];
+        // $tipoUsuario = $_POST["buscar-tipo-user"];
 
         // Consultamos a la base de datos para obtener los datos del usuario.
-        $sqlBuscarUsuarioNombre = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%' OR segundo_apellido LIKE '%$buscarUsuario%'";
+        $sqlBuscarUsuarioNombre = "SELECT * FROM usuarios WHERE username LIKE '%$buscarUsuario%' OR nombre LIKE '%$buscarUsuario%' OR primer_apellido LIKE '%$buscarUsuario%' OR segundo_apellido LIKE '%$buscarUsuario%' OR tipo_usuario LIKE '%$buscarUsuario%'";
         $result = mysqli_query($conn, $sqlBuscarUsuarioNombre);
-        $sqlBuscarUsuarioTipo = "SELECT * FROM usuarios WHERE tipo_usuario LIKE '%$tipoUsuario%'";
-        $result = mysqli_query($conn, $sqlBuscarUsuarioTipo);
+        // $sqlBuscarUsuarioTipo = "SELECT * FROM usuarios WHERE tipo_usuario LIKE '%$tipoUsuario%'";
+        // $result = mysqli_query($conn, $sqlBuscarUsuarioTipo);
         
     }
 
@@ -268,11 +268,11 @@
             <form class="funciones-usuarios" action="" method="post">
                 <div class="buscador">
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
-                    <select name="buscar-tipo-user" id="buscar-tipo-user">
+                    <!-- <select name="buscar-tipo-user" id="buscar-tipo-user">
                         <option value="">Tipo de Usuario</option>
                         <option value="1">1 = Administrador</option>
                         <option value="0">0 = Usuario</option>
-                    </select>
+                    </select> -->
                     <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
 
                     
