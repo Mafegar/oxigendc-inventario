@@ -89,6 +89,23 @@
             width: 205px;
         }
 
+        /* TABLAS DE MOVIMIENTOS */
+
+        .tabla-movimientos{
+            width: 1000px;
+            margin-top: ;
+        }
+
+        .tabla-movimientos table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabla-movimientos table th, td{
+            border: 1px solid black;
+            padding: 8px;
+        }
+
     </style>
 
 
@@ -140,11 +157,12 @@
                 
                 <table>
                     <tr>
-                        <th>Usuario</th>
+                        <th>Tipo de Movimiento</th>
                         <th>Articulo</th>
                         <th>Cantidad</th>
-                        <th>Tipo de Movimiento</th>
-                        <th>Fecha</th>
+                        <th>Fecha Movimiento</th>
+                        <th>Usuario</th>
+                        
                     </tr>
 
                     <?php
