@@ -2,7 +2,7 @@
 <?php
 
     session_start();
-    require_once("./conexion_bd/conexion.php");
+    require_once("../../conexion_bd/conexion.php");
 
     if(isset($_SESSION['username'])){
         $username = $_SESSION['username'];
@@ -63,10 +63,10 @@
 
 </head>
 <body>
-    
+
     <header>
         <div class="logo">
-            <img src="./img/logo-oxigen.png" alt="">
+            <img src="../../img/logo-oxigen.png" alt="">
         </div>
         <nav>
             <ul>

@@ -3,7 +3,7 @@
 <?php
 
     session_start();
-    require_once "./conexion_bd/conexion.php";
+    require_once("../../conexion_bd/conexion.php");
 
     
     // Verificamos si el usuario ha iniciado sesión.
