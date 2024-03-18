@@ -214,7 +214,7 @@
                     <button id="cerrar-crear-articulo">X</button>
                 </div>
 
-                <form class="form-crear" action="admin_articulos.php" method="post">
+                <form class="form-crear" action="./admin_articulos.php" method="post">
 
                     <div class="columnas-crear">
                         <div class="colum1">
@@ -283,11 +283,11 @@
 
             <dialog id="entrada-articulo">
                 <div class="titulo-entrada">
-                    <h2>Crear Usuarios</h2>
+                    <h2>Entradas de Articulos</h2>
                     <button id="cerrar-entrada">X</button>
                 </div>
 
-                <form class="form-entrada" action="admin_articulos.php" method="post">
+                <form class="form-entrada" action="./admin_articulos.php" method="post">
                     
                     <label for="nombre-entr">Nombre Articulo: </label>
                     <select name='nombre-entr' id='nombre-entr' required>;
@@ -313,11 +313,11 @@
 
             <dialog id="salida-articulo">
                 <div class="titulo-salida">
-                    <h2>Salida Articulo</h2>
+                    <h2>Salidas de Articulos</h2>
                     <button id="cerrar-salida">X</button>
                 </div>
 
-                <form class="form-salida" action="admin_articulos.php" method="post">
+                <form class="form-salida" action="./admin_articulos.php" method="post">
                     
                     <label for="nombre-sali">Nombre Articulo: </label>
                     <select name='nombre-sali' id='nombre-sali' required>;
@@ -363,17 +363,33 @@
                             if($result->num_rows > 0){
                                 // Hacemos un bucle para obtener cada fila de la consulta.
                                 while($row = mysqli_fetch_assoc($result)){
-                                    echo "<tr>";
-                                    echo "<td>" . $row["nombre"] . "</td>";
-                                    echo "<td>" . $row["marca"] . "</td>";
-                                    echo "<td>" . $row["modelo"] . "</td>";
-                                    echo "<td>" . $row["detalles"] . "</td>";
-                                    echo "<td>" . $row["tipo_producto"] . "</td>";
-                                    echo "<td>" . $row["ubicacion"] . "</td>";
-                                    echo "<td>" . $row["proveedor"] . "</td>";
-                                    echo "<td>" . $row["unidades"] . "</td>";
-                                    echo "<td>" . $row["forma_producto"] . "</td>";
-                                    echo "</tr>";
+                                    if($row["unidades"] <= 0){    
+                                        echo "<tr style='color: red;'>";
+                                        echo "<td style='font-weight: 500;'>" . $row["nombre"] . "</td>";
+                                        echo "<td>" . $row["marca"] . "</td>";
+                                        echo "<td>" . $row["modelo"] . "</td>";
+                                        echo "<td>" . $row["detalles"] . "</td>";
+                                        echo "<td>" . $row["tipo_producto"] . "</td>";
+                                        echo "<td>" . $row["ubicacion"] . "</td>";
+                                        echo "<td>" . $row["proveedor"] . "</td>";
+                                        echo "<td>" . $row["unidades"] . "</td>";
+                                        echo "<td>" . $row["forma_producto"] . "</td>";
+                                        echo "</tr>";
+                                        
+                                    } else {
+                                        echo "<tr>";
+                                        echo "<td>" . $row["nombre"] . "</td>";
+                                        echo "<td>" . $row["marca"] . "</td>";
+                                        echo "<td>" . $row["modelo"] . "</td>";
+                                        echo "<td>" . $row["detalles"] . "</td>";
+                                        echo "<td>" . $row["tipo_producto"] . "</td>";
+                                        echo "<td>" . $row["ubicacion"] . "</td>";
+                                        echo "<td>" . $row["proveedor"] . "</td>";
+                                        echo "<td>" . $row["unidades"] . "</td>";
+                                        echo "<td>" . $row["forma_producto"] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                    
                                 } 
                             } else {
                                 echo "<tr><td colspan='9'>No hay artículos</td></tr>";
