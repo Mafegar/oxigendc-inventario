@@ -5,8 +5,9 @@
     session_start();
     require_once "./conexion_bd/conexion.php";
 
+    
     // Verificamos si el usuario ha iniciado sesión.
-    if(isset($_SESSION['username'])){
+    if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
         $username = $_SESSION['username'];
     } else {
         header("location: ./index.html");
