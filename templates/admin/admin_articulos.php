@@ -126,6 +126,30 @@
     }
 
     // Modificar articulos de la base de datos.
+    if(isset($_POST["modificar-articulo"])){
+        $id_articulo = $_POST["id_articulo"];
+        $nombre = $_POST["nombre"];
+        $marca = $_POST["marca"];
+        $modelo = $_POST["modelo"];
+        $detalles = $_POST["detalles"];
+        $tipo_producto = $_POST["tipo_producto_mod"];
+        $fecha_control = $_POST["fecha_control_inicio_mod"];
+        $fecha_siguiente = $_POST["fecha_control_final_mod"];
+        $ubicacion = $_POST["ubi"];
+        $proveedor = $_POST["proveedor"];
+        $unidades = $_POST["unidades"];
+        $tipo_articulo = $_POST["tipo_articulo"];
+
+        $sql = "UPDATE articulos SET nombre = '$nombre', marca = '$marca', modelo = '$modelo', detalles = '$detalles', tipo_producto = '$tipo_producto', fecha_control = '$fecha_control', fecha_sig_control = '$fecha_siguiente', ubicacion = '$ubicacion', proveedor = '$proveedor', unidades = '$unidades', forma_producto = '$tipo_articulo' WHERE id_Articulo = '$id_articulo'";
+
+        if($conn->query($sql) === TRUE){
+            header("Location: anadir_articulo.php");
+            exit();
+        } else {
+            echo "Error al modificar el artículo: " . $conn->error;
+        }
+
+    }
     
 
     // Eliminar articulos de la base de datos.
