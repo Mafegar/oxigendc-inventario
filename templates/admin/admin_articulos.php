@@ -91,33 +91,39 @@
     
 
     if(isset($_POST["hacer-salida"])){
-        if($row["unidades"]  <= 0){
-            $nombre_sali = $_POST["nombre-sali"];
-            $unidades_sali = $_POST["unidades-sali"];
-            $fecha_sali = $_POST["fecha-oper-sali"];
-    
-    
-            // Consulta para obtener el nombre del usuario que ha iniciado sesión.
-            $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
-            $result = mysqli_query($conn, $sqlNombreUsuaioSali);
-            $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
-    
-            // Consulta para obtener el id del articulo.
-            $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
-    
+        $nombre_sali = $_POST["nombre-sali"];
+        $unidades_sali = $_POST["unidades-sali"];
+        $fecha_sali = $_POST["fecha-oper-sali"];
+
+        $sqlUnidades = "SELECT unidades FROM articulos WHERE nombre = '$nombre_sali'";
+        $result = mysqli_query($conn, $sqlUnidades);
+        $unidades = mysqli_fetch_assoc($result)["unidades"];
+
+        // Consulta para obtener el nombre del usuario que ha iniciado sesión.
+        $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
+        $result = mysqli_query($conn, $sqlNombreUsuaioSali);
+        $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
+
+        // Consulta para obtener el id del articulo.
+        $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
+
+        if($unidades < 0 || $unidades >= $unidades_sali){
+            $mensaje = "No hay suficientes unidades para realizar la salida.";
+            echo "<script> alert('". $mensaje ."') </script>";
+        } else {
             // Insertamos la salida del articulo en la tabla de salidas.
             $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
-                VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-    
+            VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+
             // Actualizamos las unidades del articulo en la tabla de articulos.
             $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
-    
+
             if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
                 
                 // Insertamos la entrada que hacemos en la tabla de movimientos.
                 $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
                     VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-    
+
                 // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
                 if($conn->query($sqlMovimiento) === TRUE){
                     echo "Salida realizada con éxito.";
@@ -129,11 +135,12 @@
             } else {
                 echo "Error al realizar la salida: " . $conn->error;
             }
-        } else {
-            $mensaje = "No hay suficientes unidades para realizar la salida.";
-            echo "<script> alert('". $mensaje ."') </script>";
-        }  
+        }
+        
     } 
+
+    $mensaje = "No hay suficientes unidades para realizar la salida.";
+    echo "<script> alert('". $mensaje ."') </script>";
 
     // if(isset($_POST["hacer-salida"])){
     //     $nombre_sali = $_POST["nombre-sali"];
