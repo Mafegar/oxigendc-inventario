@@ -35,12 +35,12 @@
             margin: 0;
             padding: 0;
             font-family: "Raleway", sans-serif;
-            background-image: url("../../img/medio_logo_abajo.png");
+            /* background-image: url("../../img/medio_logo_abajo.png");
             background-repeat: no-repeat;
             background-position: center bottom;
             height: 97vh;
             background-size: 1000px;
-            background-position-Y: 333px;
+            background-position-Y: 333px; */
 
         }
 
@@ -69,7 +69,7 @@
         }
 
         .fondo_header img{
-            width: 650px;
+            width: 600px;
         }
 
         .fondo{
@@ -95,7 +95,7 @@
         nav{
             height: 44vh;
             margin: auto;
-            width: 1300px;
+            width: 1000px;
         }
 
         nav ul{
@@ -113,6 +113,10 @@
         nav ul li a{
             text-decoration: none;
             color: black;
+        }
+
+        .info-persona{
+            text-align: center;
         }
 
         .inventario, .usuarios, .movimiento, .cerrar, .info-persona{

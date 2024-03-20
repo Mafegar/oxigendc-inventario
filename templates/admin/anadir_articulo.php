@@ -79,7 +79,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 1000px;
+            width: 1100px;
             margin: auto;
             margin-top: 20px;
         }
@@ -105,7 +105,7 @@
         /* CUERPO */
 
         #cuerpo{
-            width: 1000px;
+            width: 1100px;
             margin: auto;
         }
 
@@ -136,7 +136,7 @@
         /* MOSTRAR ARTICULOS */
 
         .ver-articulos{
-            width: 1000px;
+            width: 1100px;
         }
         
 
@@ -462,9 +462,6 @@
 
                 <div class="formulario-modificar">
 
-                    
-                
-
                     <?php
 
                         if($resultModificarArticulo->num_rows > 0){
@@ -553,6 +550,7 @@
                             <th>Modelo</th>
                             <th>Detalles</th>
                             <th>Tipo de Producto</th>
+                            <th> Fecha Control</th>
                             <th>Ubicación</th>
                             <th>Proveedor</th>
                             <th>Unidades</th>
@@ -574,6 +572,7 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
+                                        echo "<td>" . $row["fecha_control"] . "</td>";
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
@@ -587,6 +586,7 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
+                                        echo "<td>" . $row["fecha_control"] . "</td>";
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
