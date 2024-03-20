@@ -124,7 +124,7 @@
             justify-content: center;
             align-items: center;
             border-radius: 10px;
-            width: 200px;
+            width: 225px;
             height: 50px;
         }
 
@@ -137,22 +137,101 @@
         }
 
         .inventario{
-            background-color: #86b398;
-            color: white;
+            background-color: #8E9AB0
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
+            padding-block: 0.5rem;
+            padding-inline: 1.25rem;
+            background-color: rgb(0 107 179);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff;
+            gap: 10px;
+            font-weight: bold;
+            /* border: 3px solid #ffffff4d; */
+            outline: none;
+            overflow: hidden;
+            font-size: 15px;
         }
         .usuarios{
-            background-color: #68a8de;
+            background-color: #8E9AB0
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            padding-block: 0.5rem;
+            padding-inline: 1.25rem;
+            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff;
+            gap: 10px;
+            font-weight: bold;
+            /* border: 3px solid #ffffff4d; */
+            outline: none;
+            overflow: hidden;
+            font-size: 15px;
         }
         .movimiento{
-            background-color: #a2c037;
+            background-color: #8E9AB0
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
+            padding-block: 0.5rem;
+            padding-inline: 1.25rem;
+            background-color: rgb(0 107 179);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff;
+            gap: 10px;
+            font-weight: bold;
+            /* border: 3px solid #ffffff4d; */
+            outline: none;
+            overflow: hidden;
+            font-size: 15px;
+
+
         }
+
+        .movimiento li a{
+            text-align: center;
+        }
+  
         .cerrar{
-            background-color: #4d4792;
+            background-color: #8E9AB0
+            position: relative;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            padding-block: 0.5rem;
+            padding-inline: 1.25rem;
+            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffff;
+            gap: 10px;
+            font-weight: bold;
+            /* border: 3px solid #ffffff4d; */
+            outline: none;
+            overflow: hidden;
+            font-size: 15px;
         }
         .info-persona{
             /* background: linear-gradient(167deg, rgba(77,71,146,1) 0%, rgba(134,168,222,1) 42%, rgba(134,179,152,1) 63%, rgba(162,192,55,1) 91%); */
             background: linear-gradient(167deg, rgba(134,179,152,1) 50%, rgba(162,192,55,1) 100%);
         } 
+
+        .inventario:hover, .usuarios:hover, .movimiento:hover, .cerrar:hover {
+            transform: scale(1.05);
+        }
+
 
     </style>
 
@@ -172,16 +251,18 @@
 
     <nav>
         <ul>
+
             <div class="sect-1">
-                <div class="inventario">
-                    <li><a href="./anadir_articulo.php">Inventario</a></li>
-                </div>
+            
+            <a href="./anadir_articulo.php"><div class="inventario">
+                    <li>Inventario</li>
+                </div></a>
                 <div class="usuarios">
                     <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 </div>
             </div>
             <div class="sect-3">
-                <div class="info-persona">
+                <div class="info-persona ">
                     <li>
                         <?php 
                             while($row = mysqli_fetch_assoc($result)){
@@ -210,9 +291,24 @@
         </ul>
     </nav>
 
-    <div class="container">
 
-    </div>
+    <script>
+        const elementos = document.querySelectorAll('.elemento');
+
+    elementos.forEach(elemento => {
+    elemento.addEventListener('mouseover', () => {
+        elemento.style.transition = 'background 3s';
+        elemento.style.background = 'linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%)';
+    });
+
+    elemento.addEventListener('mouseleave', () => {
+        elemento.style.transition = 'background 0.3s';
+        elemento.style.background = '';
+    });
+});
+
+
+    </script>
 
 
 </body>
