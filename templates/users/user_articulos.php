@@ -88,7 +88,7 @@
             // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
             if($conn->query($sqlMovimiento) === TRUE){
                 echo "Salida realizada con éxito.";
-                header("Location: anadir_articulo.php");
+                header("Location: ./anadir_articulo_user.php");
                 exit();
             } else {
                 echo "Error al realizar la salida: " . $conn->error;

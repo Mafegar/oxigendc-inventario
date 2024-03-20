@@ -12,6 +12,9 @@
         exit();
     }
 
+    $sql = "SELECT * FROM articulos";
+    $result = mysqli_query($conn, $sql);
+
     // Añadir los articulos a la base de datos.
     if(isset($_POST["crear_articulo"])){
         $nombre = $_POST["nombre"];
@@ -66,8 +69,8 @@
         if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
             
             // Insertamos la entrada que hacemos en la tabla de movimientos.
-            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
-                VALUES ('Entrada', '$nombre_entr', '$unidades_entr', '$fecha_entr', '$nombre_usuario_entr')";
+            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion, nombre_usuario)
+                VALUES ('Entrada', '$nombre_entr', '$unidades_entr', '$fecha_entr', 'Oxigen' ,'$nombre_usuario_entr')";
 
             // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
             if($conn->query($sqlMovimiento) === TRUE){
@@ -85,45 +88,92 @@
     }
 
     // Hacer una salida a la base de datos.
+    
+
     if(isset($_POST["hacer-salida"])){
-        $nombre_sali = $_POST["nombre-sali"];
-        $unidades_sali = $_POST["unidades-sali"];
-        $fecha_sali = $_POST["fecha-oper-sali"];
-
-
-        // Consulta para obtener el nombre del usuario que ha iniciado sesión.
-        $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
-        $result = mysqli_query($conn, $sqlNombreUsuaioSali);
-        $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
-
-        // Consulta para obtener el id del articulo.
-        $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
-
-        // Insertamos la salida del articulo en la tabla de salidas.
-        $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
-            VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-
-        // Actualizamos las unidades del articulo en la tabla de articulos.
-        $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
-
-        if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-            
-            // Insertamos la entrada que hacemos en la tabla de movimientos.
-            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
-                VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-
-            // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
-            if($conn->query($sqlMovimiento) === TRUE){
-                echo "Salida realizada con éxito.";
-                header("Location: anadir_articulo.php");
-                exit();
+        if($row["unidades"]  <= 0){
+            $nombre_sali = $_POST["nombre-sali"];
+            $unidades_sali = $_POST["unidades-sali"];
+            $fecha_sali = $_POST["fecha-oper-sali"];
+    
+    
+            // Consulta para obtener el nombre del usuario que ha iniciado sesión.
+            $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
+            $result = mysqli_query($conn, $sqlNombreUsuaioSali);
+            $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
+    
+            // Consulta para obtener el id del articulo.
+            $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
+    
+            // Insertamos la salida del articulo en la tabla de salidas.
+            $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
+                VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+    
+            // Actualizamos las unidades del articulo en la tabla de articulos.
+            $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
+    
+            if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
+                
+                // Insertamos la entrada que hacemos en la tabla de movimientos.
+                $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
+                    VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+    
+                // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
+                if($conn->query($sqlMovimiento) === TRUE){
+                    echo "Salida realizada con éxito.";
+                    header("Location: anadir_articulo.php");
+                    exit();
+                } else {
+                    echo "Error al realizar la salida: " . $conn->error;
+                }
             } else {
                 echo "Error al realizar la salida: " . $conn->error;
             }
         } else {
-            echo "Error al realizar la salida: " . $conn->error;
-        }
-    }
+            $mensaje = "No hay suficientes unidades para realizar la salida.";
+            echo "<script> alert('". $mensaje ."') </script>";
+        }  
+    } 
+
+    // if(isset($_POST["hacer-salida"])){
+    //     $nombre_sali = $_POST["nombre-sali"];
+    //     $unidades_sali = $_POST["unidades-sali"];
+    //     $fecha_sali = $_POST["fecha-oper-sali"];
+
+
+    //     // Consulta para obtener el nombre del usuario que ha iniciado sesión.
+    //     $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
+    //     $result = mysqli_query($conn, $sqlNombreUsuaioSali);
+    //     $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
+
+    //     // Consulta para obtener el id del articulo.
+    //     $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
+
+    //     // Insertamos la salida del articulo en la tabla de salidas.
+    //     $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
+    //         VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+
+    //     // Actualizamos las unidades del articulo en la tabla de articulos.
+    //     $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
+
+    //     if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
+            
+    //         // Insertamos la entrada que hacemos en la tabla de movimientos.
+    //         $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
+    //             VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+
+    //         // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
+    //         if($conn->query($sqlMovimiento) === TRUE){
+    //             echo "Salida realizada con éxito.";
+    //             header("Location: anadir_articulo.php");
+    //             exit();
+    //         } else {
+    //             echo "Error al realizar la salida: " . $conn->error;
+    //         }
+    //     } else {
+    //         echo "Error al realizar la salida: " . $conn->error;
+    //     }
+    // }
 
     // Modificar articulos de la base de datos.
     if(isset($_POST["modificar-articulo"])){

@@ -79,7 +79,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 1100px;
+            width: 1000px;
             margin: auto;
             margin-top: 20px;
         }
@@ -105,7 +105,7 @@
         /* CUERPO */
 
         #cuerpo{
-            width: 1100px;
+            width: 1000px;
             margin: auto;
         }
 
@@ -136,7 +136,9 @@
         /* MOSTRAR ARTICULOS */
 
         .ver-articulos{
-            width: 1100px;
+            width: 1000px;
+            margin: auto;
+            margin-bottom: 30px;
         }
         
 
@@ -179,6 +181,7 @@
             height: 25px;
             background-color: red;
             color: white;
+            border-radius: 5px;
         }
 
         /* TABLA PARA PODER BORRAR ARTICULOS */
@@ -268,13 +271,11 @@
                 <div class="botones-acciones">
                     <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
 
-                    <div class="entradas">
-                        <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
-                    </div>
+                    <input type="button" name="modificar" id="modificar" value="Modificar Articulo">
+
+                    <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
                     
                     <input type="button" name="salida" id="salida" value="Salida de Articulos">
-
-                    <input type="button" name="modificar" id="modificar" value="Modificar Articulo">
 
                     <input type="button" name="eliminar" id="eliminar" value="Eliminar Articulo">
                 </div>
@@ -404,6 +405,13 @@
                     <br><br>
                     <label for="unidades-sali">Unidades: </label>
                     <input type="number" name="unidades-sali" id="unidades-sali" placeholder="Cantidadl Articulo" required>
+                    <br><br>
+                    <label for="ubi">Ubicación: </label>
+                    <select name="ubi" id="ubi" required>
+                        <option value="">Seleccione la Ubicación</option>
+                        <option value="Oxigen">Oxigen</option>
+                        <option value="Entregado en Obra">Entregado en Obra</option>
+                    </select>
                     <br><br>
                     <label for="fecha-oper-sali">Fecha Entrada: </label>
                     <input type="date" name="fecha-oper-sali" id="fecha-oper-sali" >

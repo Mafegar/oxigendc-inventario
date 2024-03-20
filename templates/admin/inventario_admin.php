@@ -123,7 +123,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid black;
             border-radius: 10px;
             width: 200px;
             height: 50px;
@@ -133,7 +132,27 @@
             margin-bottom: 50px;
         }
 
-        
+        .inventario li a, .usuarios li a, .movimiento li a, .cerrar li a ,.info-persona{
+            color: white;
+        }
+
+        .inventario{
+            background-color: #86b398;
+            color: white;
+        }
+        .usuarios{
+            background-color: #68a8de;
+        }
+        .movimiento{
+            background-color: #a2c037;
+        }
+        .cerrar{
+            background-color: #4d4792;
+        }
+        .info-persona{
+            /* background: linear-gradient(167deg, rgba(77,71,146,1) 0%, rgba(134,168,222,1) 42%, rgba(134,179,152,1) 63%, rgba(162,192,55,1) 91%); */
+            background: linear-gradient(167deg, rgba(134,179,152,1) 50%, rgba(162,192,55,1) 100%);
+        } 
 
     </style>
 
