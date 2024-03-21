@@ -90,8 +90,6 @@
     }
 
     // Hacer una salida a la base de datos.
-    
-
     if(isset($_POST["hacer-salida"])){
         $nombre_sali = $_POST["nombre-sali"];
         $unidades_sali = $_POST["unidades-sali"];
@@ -125,9 +123,9 @@
 
                 // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
                 if($conn->query($sqlMovimiento) === TRUE){
-                    header("refresh: 0; url=anadir_articulo.php");
                     $mensaje = "Entrada realizada con éxito.";
                     echo "<script> alert('". $mensaje ."') </script>";
+                    header("refresh: 0; url=anadir_articulo.php");
                     exit();
                 } else {
                     echo "Error al realizar la salida: " . $conn->error;
@@ -162,7 +160,9 @@
         $sql = "UPDATE articulos SET nombre = '$nombre', marca = '$marca', modelo = '$modelo', detalles = '$detalles', tipo_producto = '$tipo_producto', fecha_control = '$fecha_control', fecha_sig_control = '$fecha_siguiente', ubicacion = '$ubicacion', proveedor = '$proveedor', unidades = '$unidades', forma_producto = '$tipo_articulo' WHERE id_Articulo = '$id_articulo'";
 
         if($conn->query($sql) === TRUE){
-            header("Location: anadir_articulo.php");
+            $mensaje = "Modificacion realizada con éxito.";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh: 0; url=anadir_articulo.php");
             exit();
         } else {
             echo "Error al modificar el artículo: " . $conn->error;
@@ -178,7 +178,9 @@
         $sql = "DELETE FROM articulos WHERE id_Articulo = '$id_articulo'";
 
         if($conn->query($sql) === TRUE){
-            header("Location: anadir_articulo.php");
+            $mensaje = "Eliminación realizada con éxito.";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh: 0; url=anadir_articulo.php");
             exit();
         } else {
             echo "Error al eliminar el artículo: " . $conn->error;
@@ -203,7 +205,9 @@
             VALUES ('$nombre', '$primer_apellido', '$segundo_apellido', '$username', '$password', '$tipo_usuario')";
 
         if($conn->query($sql) === TRUE){
-            header("Location: crear_usuarios.php");
+            $mensaje = "Se creo correctamemte el Usuario: ". $nombre ." " . $primer_apellido ."";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh: 0; url=crear_usuarios.php");
             exit();
         } else {
             echo "Error al crear el usuario: " . $conn->error;

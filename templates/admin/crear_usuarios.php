@@ -302,7 +302,7 @@
                     <button id="cerrar-crear-usuario">X</button>
                 </div>
 
-                <form class="form-crear" action="admin_articulos.php" method="post">
+                <form class="form-crear" action="admin_funciones.php" method="post">
 
                     <label for="nombre">Nombre: </label>
                     <input type="text" name="nombre" id="nombre" placeholder="Nombre del Usuario" required>
@@ -349,7 +349,7 @@
                             // Recorremos la base de datos para mostrar los usuarios.
                             while($row = $resultModificar -> fetch_assoc()){
                                 echo "<div class='mod-usuario'>";
-                                    echo "<form class='form-modif' action='admin_articulos.php' method='post'>";
+                                    echo "<form class='form-modif' action='admin_funciones.php' method='post'>";
                                         echo "<label for='nombre'>Nombre: </label>";
                                         echo "<input type='text' name='nombre' id='nombre' value='". $row["nombre"] ."' required>";
 
@@ -411,7 +411,7 @@
                         // Hacemos un bucle para mostrar todos los usuarios de la BBDD.
                         while($row = $resultEliminar->fetch_assoc()){
                             echo "<div class='usuarios'>";
-                                echo "<form action='admin_articulos.php' method='post'>";
+                                echo "<form action='admin_funciones.php' method='post'>";
                                     echo "<div class='usuarios-info'>";
                                         echo "<h4> Nombre: <span>" . $row["nombre"] . "</span> <span>" . $row["primer_apellido"] . "</span></h4>";
                                         echo "<h4> User: <span>". $row["username"] ."</span></h4>";

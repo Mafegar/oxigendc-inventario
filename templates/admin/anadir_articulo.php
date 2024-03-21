@@ -467,7 +467,7 @@
                         
                         while($row = $resultEliminarArticulo -> fetch_assoc()){
                             echo "<div class='articulo-eliminar'>";
-                                echo "<form action='admin_articulos.php' method='post'>";
+                                echo "<form action='admin_funciones.php' method='post'>";
                                     echo "<div class='articulo-info'>";
                                         echo "<h4> Articulo: <span>" . $row["nombre"] . "</span></h4>";
                                         echo "<h4> Tipo Producto: <span>" . $row["tipo_producto"] . "</span></h4>";
@@ -510,7 +510,7 @@
 
                                 echo "<div class='mod-articulo'>";
                                     echo "<h4>" . $row["nombre"] . "</h4>";
-                                    echo "<form class='form-modif' action='admin_articulos.php' method='post'>";
+                                    echo "<form class='form-modif' action='admin_funciones.php' method='post'>";
                                         echo "<label for='nombre'>Nombre: </label>";
                                         echo "<input type='text' name='nombre' id='nombre' value='". $row["nombre"] ."'>";
 
