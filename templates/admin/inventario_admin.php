@@ -4,10 +4,11 @@
     session_start();
     require_once("../../conexion_bd/conexion.php");
 
+    // Verificamos si el usuario ha iniciado sesión.
     if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
         $username = $_SESSION['username'];
     } else {
-        header("location ./index.html");
+        header("location: ../../index.html");
         exit();
     }
 
@@ -119,9 +120,10 @@
             text-align: center;
         }
 
-        .sect-1 a{
+        .sect-1 a, .sect-2 a{
             text-decoration: none;
         }
+
 
         .inventario, .usuarios, .movimiento, .cerrar, .info-persona{
             display: flex;
@@ -143,90 +145,6 @@
             color: white;
         }
 
-
-        /* .inventario{
-            background-color: #8E9AB0;
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
-            padding-block: 0.5rem;
-            padding-inline: 1.25rem;
-            background-color: rgb(0 107 179);
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffff;
-            gap: 10px;
-            font-weight: bold;
-            border: 3px solid #ffffff4d;
-            outline: none;
-            overflow: hidden;
-            font-size: 15px;
-        } 
-        .usuarios{
-            background-color: #8E9AB0
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            padding-block: 0.5rem;
-            padding-inline: 1.25rem;
-            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffff;
-            gap: 10px;
-            font-weight: bold;
-            border: 3px solid #ffffff4d;
-            outline: none;
-            overflow: hidden;
-            font-size: 15px;
-        }
-        .movimiento{
-            background-color: #8E9AB0
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
-            padding-block: 0.5rem;
-            padding-inline: 1.25rem;
-            background-color: rgb(0 107 179);
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffff;
-            gap: 10px;
-            font-weight: bold;
-            border: 3px solid #ffffff4d;
-            outline: none;
-            overflow: hidden;
-            font-size: 15px;
-
-        }
-  
-        .cerrar{
-            background-color: #8E9AB0
-            position: relative;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-            padding-block: 0.5rem;
-            padding-inline: 1.25rem;
-            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffff;
-            gap: 10px;
-            font-weight: bold;
-            border: 3px solid #ffffff4d;
-            outline: none;
-            overflow: hidden;
-            font-size: 15px;
-        }*/
-        
         .info-persona{
             /* background: linear-gradient(167deg, rgba(77,71,146,1) 0%, rgba(134,168,222,1) 42%, rgba(134,179,152,1) 63%, rgba(162,192,55,1) 91%); */
             background: linear-gradient(167deg, rgba(134,179,152,1) 50%, rgba(162,192,55,1) 100%);

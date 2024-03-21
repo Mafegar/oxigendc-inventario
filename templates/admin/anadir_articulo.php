@@ -5,10 +5,10 @@
     require_once("../../conexion_bd/conexion.php");
 
     // Verificamos si el usuario ha iniciado sesión.
-    if(isset($_SESSION['username'])){
+    if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
         $username = $_SESSION['username'];
     } else {
-        header("location: ./index.html");
+        header("location: ../../index.html");
         exit();
     }
 
@@ -19,10 +19,28 @@
     // Barra de navegación para buscar un articulo.
     if(isset($_POST["boton-buscar"])){
         $busuqeda = $_POST["barra-buscar"];
+        $tipo_articulo = $_POST["buscar-tipo-arti"];
 
-        // Hacemos una consulta a la base de datos para obtener los articulos.
-        $sqlBuscarArticulo = "SELECT * FROM articulos WHERE nombre LIKE '%$busuqeda%'";
-        $result = mysqli_query($conn, $sqlBuscarArticulo);
+        if($tipo_articulo == "Equipo") {
+            // Consultamos la base de bbdd para obeter los articulos de tipo Equipo.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE tipo_producto = 'Equipo'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+
+        } else if ($tipo_articulo == "Kit") {
+            // Consultamos la base de bbdd para obeter los articulos de tipo Kit Maleta.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE tipo_producto = 'Kit Maleta'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+
+        } else if($tipo_articulo == "Herramienta"){
+            // Consultamos la base de bbdd para obeter los articulos de tipo Herramienta.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE tipo_producto = 'Herramienta'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+
+        } else {
+            // Consultamos la bbdd para obtener los articulos que busque el usuario a traves de la barra de busqueda.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE nombre LIKE '%$busuqeda%'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+        }
         
     }
 
@@ -168,6 +186,10 @@
             width: 205px;
         }
 
+        .buscador select{
+            height: 21px;
+        }
+
 
         /* HACER ENTRADA Y SALIDAS*/
 
@@ -247,8 +269,8 @@
         <nav>
             <ul>
                 <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="./anadir_articulo.php">Inventario</a></li>
+                <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
@@ -265,8 +287,18 @@
             <form class="funciones-articulos" action="" method="post">
                 <div class="buscador">
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
+
+                    <select name="buscar-tipo-arti" id="buscar-tipo-arti">
+                        <option value="">Escoja una opcion</option>
+                        <option value="Equipo">Equipo</option>
+                        <option value="Kit">Kit Maleta</option>
+                        <option value="Herramienta">Herramienta</option>
+                    </select>
+
                     <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
                 </div>
+
+
 
                 <div class="botones-acciones">
                     <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
@@ -289,7 +321,7 @@
                     <button id="cerrar-crear-articulo">X</button>
                 </div>
 
-                <form class="form-crear" action="./admin_articulos.php" method="post">
+                <form class="form-crear" action="./admin_funciones.php" method="post">
 
                     <div class="columnas-crear">
                         <div class="colum1">
@@ -362,7 +394,7 @@
                     <button id="cerrar-entrada">X</button>
                 </div>
 
-                <form class="form-entrada" action="./admin_articulos.php" method="post">
+                <form class="form-entrada" action="./admin_funciones.php" method="post">
                     
                     <label for="nombre-entr">Nombre Articulo: </label>
                     <select name='nombre-entr' id='nombre-entr' required>;
@@ -392,7 +424,7 @@
                     <button id="cerrar-salida">X</button>
                 </div>
 
-                <form class="form-salida" action="./admin_articulos.php" method="post">
+                <form class="form-salida" action="./admin_funciones.php" method="post">
                     
                     <label for="nombre-sali">Nombre Articulo: </label>
                     <select name='nombre-sali' id='nombre-sali' required>;

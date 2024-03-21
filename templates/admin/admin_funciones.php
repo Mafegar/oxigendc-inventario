@@ -5,10 +5,11 @@
     session_start();
     require_once("../../conexion_bd/conexion.php");
 
-    if(isset($_SESSION['username'])){
+    // Verificamos si el usuario ha iniciado sesión.
+    if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
         $username = $_SESSION['username'];
     } else {
-        header("location: ./index.html");
+        header("location: ../../index.html");
         exit();
     }
 
@@ -33,8 +34,9 @@
             VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
 
         if($conn->query($sql) === TRUE){
-            echo "Artículo creado con éxito.";
-            header("Location: anadir_articulo.php");
+            $mensaje = "Articulo creado con éxito.";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh: 0; url=anadir_articulo.php");
             exit();
         } else {
             echo "Error al crear el artículo: " . $conn->error;
@@ -42,7 +44,6 @@
 
     }
 
-    
     // Hacer una entrada a la base de datos.
     if(isset($_POST["hacer-entrada"])){
         $nombre_entr = $_POST["nombre-entr"];
@@ -74,8 +75,9 @@
 
             // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
             if($conn->query($sqlMovimiento) === TRUE){
-                echo "Entrada realizada con éxito.";
-                header("Location: anadir_articulo.php");
+                $mensaje = "Entrada realizada con éxito.";
+                echo "<script> alert('". $mensaje ."') </script>";
+                header("refresh: 0; url=anadir_articulo.php");
                 exit();
             } else {
                 echo "Error al realizar la entrada: " . $conn->error;
@@ -123,8 +125,9 @@
 
                 // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
                 if($conn->query($sqlMovimiento) === TRUE){
-                    echo "Salida realizada con éxito.";
-                    header("Location: anadir_articulo.php");
+                    header("refresh: 0; url=anadir_articulo.php");
+                    $mensaje = "Entrada realizada con éxito.";
+                    echo "<script> alert('". $mensaje ."') </script>";
                     exit();
                 } else {
                     echo "Error al realizar la salida: " . $conn->error;
@@ -140,49 +143,6 @@
         }
         
     } 
-
-    // $mensaje = "No hay suficientes unidades para realizar la salida.";
-    // echo "<script> alert('". $mensaje ."') </script>";
-
-    // if(isset($_POST["hacer-salida"])){
-    //     $nombre_sali = $_POST["nombre-sali"];
-    //     $unidades_sali = $_POST["unidades-sali"];
-    //     $fecha_sali = $_POST["fecha-oper-sali"];
-
-
-    //     // Consulta para obtener el nombre del usuario que ha iniciado sesión.
-    //     $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
-    //     $result = mysqli_query($conn, $sqlNombreUsuaioSali);
-    //     $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
-
-    //     // Consulta para obtener el id del articulo.
-    //     $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
-
-    //     // Insertamos la salida del articulo en la tabla de salidas.
-    //     $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
-    //         VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-
-    //     // Actualizamos las unidades del articulo en la tabla de articulos.
-    //     $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
-
-    //     if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-            
-    //         // Insertamos la entrada que hacemos en la tabla de movimientos.
-    //         $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
-    //             VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
-
-    //         // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
-    //         if($conn->query($sqlMovimiento) === TRUE){
-    //             echo "Salida realizada con éxito.";
-    //             header("Location: anadir_articulo.php");
-    //             exit();
-    //         } else {
-    //             echo "Error al realizar la salida: " . $conn->error;
-    //         }
-    //     } else {
-    //         echo "Error al realizar la salida: " . $conn->error;
-    //     }
-    // }
 
     // Modificar articulos de la base de datos.
     if(isset($_POST["modificar-articulo"])){

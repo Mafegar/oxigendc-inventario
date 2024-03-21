@@ -8,7 +8,7 @@
     if(isset($_SESSION['username'])){
         $username = $_SESSION['username'];
     } else {
-        header("location: ./index.html");
+        header("location: ../index.html");
         exit();
     }
 
@@ -150,8 +150,8 @@
                 <?php
                     if($_SESSION["tipo_usuario"] == 1){
                         echo "<li><a href='./admin/inventario_admin.php'>Inicio</a></li>";
-                        echo "<li><a href='./admin/crear_usuarios.php'>Usuarios</a></li>";
                         echo "<li><a href='./admin/anadir_articulo.php'>Inventario</a></li>";
+                        echo "<li><a href='./admin/crear_usuarios.php'>Usuarios</a></li>";
 
                     } else if($_SESSION["tipo_usuario"] == 0) {
                         echo "<li><a href='./users/inventario_user.php'>Inicio</a></li>";
@@ -174,9 +174,9 @@
 
             <div class="funciones-movimientos">
                 <div class="buscador">
-                    <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
+                    <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
                     <select name="buscar-tipo-mov" id="buscar-tipo-mov">
-                        <option value="">Tipo de Usuario</option>
+                        <option value="">Tipo de Movimiento</option>
                         <option value="Entradas">Entradas</option>
                         <option value="Salidas">Salidas</option>
                     </select>

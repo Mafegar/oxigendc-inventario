@@ -10,7 +10,7 @@
     if(isset($_SESSION['username']) && $_SESSION["tipo_usuario"] == 1){
         $username = $_SESSION['username'];
     } else {
-        header("location: ./index.html");
+        header("location: ../../index.html");
         exit();
     }
 
@@ -258,9 +258,8 @@
         <nav>
             <ul>
                 <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="./anadir_articulo.php">Inventario</a></li>
-                
+                <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
