@@ -127,9 +127,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 100px;
             width: 225px;
             height: 50px;
+            background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
+            font-weight: bold;
+            color: white;
         }
 
         .inventario,.movimiento{
@@ -141,8 +144,8 @@
         }
 
 
-        .inventario{
-            background-color: #8E9AB0
+        /* .inventario{
+            background-color: #8E9AB0;
             position: relative;
             transition: all 0.3s ease-in-out;
             background: linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%);
@@ -156,11 +159,11 @@
             color: #ffff;
             gap: 10px;
             font-weight: bold;
-            /* border: 3px solid #ffffff4d; */
+            border: 3px solid #ffffff4d;
             outline: none;
             overflow: hidden;
             font-size: 15px;
-        }
+        } 
         .usuarios{
             background-color: #8E9AB0
             position: relative;
@@ -176,7 +179,7 @@
             color: #ffff;
             gap: 10px;
             font-weight: bold;
-            /* border: 3px solid #ffffff4d; */
+            border: 3px solid #ffffff4d;
             outline: none;
             overflow: hidden;
             font-size: 15px;
@@ -196,16 +199,11 @@
             color: #ffff;
             gap: 10px;
             font-weight: bold;
-            /* border: 3px solid #ffffff4d; */
+            border: 3px solid #ffffff4d;
             outline: none;
             overflow: hidden;
             font-size: 15px;
 
-
-        }
-
-        .movimiento li a{
-            text-align: center;
         }
   
         .cerrar{
@@ -223,11 +221,12 @@
             color: #ffff;
             gap: 10px;
             font-weight: bold;
-            /* border: 3px solid #ffffff4d; */
+            border: 3px solid #ffffff4d;
             outline: none;
             overflow: hidden;
             font-size: 15px;
-        }
+        }*/
+        
         .info-persona{
             /* background: linear-gradient(167deg, rgba(77,71,146,1) 0%, rgba(134,168,222,1) 42%, rgba(134,179,152,1) 63%, rgba(162,192,55,1) 91%); */
             background: linear-gradient(167deg, rgba(134,179,152,1) 50%, rgba(162,192,55,1) 100%);
@@ -264,10 +263,13 @@
                         <li>Inventario</li>
                     </div>
                 </a>
-                <div class="usuarios">
-                    <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                </div>
+                <a href="./crear_usuarios.php">
+                    <div class="usuarios">
+                        <li>Usuarios</li>
+                    </div>
+                </a>
             </div>
+
             <div class="sect-3">
                 <div class="info-persona ">
                     <li>
@@ -284,13 +286,18 @@
                     </li>
                 </div>
             </div>
+
             <div class="sect-2">
-                <div class="movimiento">
-                    <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
-                </div>
-                <div class="cerrar">
-                    <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
-                </div>
+                <a href="../ver_movimientos.php">
+                    <div class="movimiento">
+                        <li>Historial de Movimientos</li>
+                    </div>
+                </a>
+                <a href="../../conexion_bd/cerrar_sesion.php">
+                    <div class="cerrar">
+                        <li>Cerrar Sesion</li>
+                    </div>
+                </a>
             </div>
             
            

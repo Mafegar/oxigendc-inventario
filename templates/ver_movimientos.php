@@ -105,6 +105,10 @@
             margin-bottom: 20px;
         }
 
+        .funciones-movimientos select{
+            height: 20px;
+        }
+
         .botones-acciones{
             display: flex;
             gap: 10px;
@@ -118,7 +122,7 @@
 
         .tabla-movimientos{
             width: 1000px;
-            margin-top: ;
+            margin-bottom: 20px;
         }
 
         .tabla-movimientos table{

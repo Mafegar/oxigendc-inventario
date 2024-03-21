@@ -135,7 +135,8 @@
         } else {
             $mensaje = "No hay suficientes unidades para realizar la salida.";
             echo "<script> alert('". $mensaje ."') </script>";
-            header("refresh:5;url=anadir_articulo.php");
+            header("refresh:0.5;url=anadir_articulo.php");
+            exit();
         }
         
     } 

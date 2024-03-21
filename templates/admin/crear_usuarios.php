@@ -76,7 +76,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 1000px;
+            width: 1100px;
             margin: auto;
             margin-top: 20px;
         }
@@ -102,7 +102,7 @@
         /* CUERPO */
 
         #cuerpo{
-            width: 1000px;
+            width: 1100px;
             margin: auto;
         }
 
@@ -231,7 +231,7 @@
         /* MOSTRAR USUARIOS */
 
         .ver-usuarios{
-            width: 1000px;
+            width: 1100px;
             margin-top: ;
         }
 
