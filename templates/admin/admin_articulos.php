@@ -108,9 +108,6 @@
         $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
 
         if($unidades < 0 || $unidades >= $unidades_sali){
-            $mensaje = "No hay suficientes unidades para realizar la salida.";
-            echo "<script> alert('". $mensaje ."') </script>";
-        } else {
             // Insertamos la salida del articulo en la tabla de salidas.
             $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
             VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
@@ -135,12 +132,16 @@
             } else {
                 echo "Error al realizar la salida: " . $conn->error;
             }
+        } else {
+            $mensaje = "No hay suficientes unidades para realizar la salida.";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh:5;url=anadir_articulo.php");
         }
         
     } 
 
-    $mensaje = "No hay suficientes unidades para realizar la salida.";
-    echo "<script> alert('". $mensaje ."') </script>";
+    // $mensaje = "No hay suficientes unidades para realizar la salida.";
+    // echo "<script> alert('". $mensaje ."') </script>";
 
     // if(isset($_POST["hacer-salida"])){
     //     $nombre_sali = $_POST["nombre-sali"];

@@ -119,6 +119,10 @@
             text-align: center;
         }
 
+        .sect-1 a{
+            text-decoration: none;
+        }
+
         .inventario, .usuarios, .movimiento, .cerrar, .info-persona{
             display: flex;
             justify-content: center;
@@ -135,6 +139,7 @@
         .inventario li a, .usuarios li a, .movimiento li a, .cerrar li a ,.info-persona{
             color: white;
         }
+
 
         .inventario{
             background-color: #8E9AB0
@@ -254,9 +259,11 @@
 
             <div class="sect-1">
             
-            <a href="./anadir_articulo.php"><div class="inventario">
-                    <li>Inventario</li>
-                </div></a>
+                <a href="./anadir_articulo.php">
+                    <div class="inventario">
+                        <li>Inventario</li>
+                    </div>
+                </a>
                 <div class="usuarios">
                     <li><a href="./crear_usuarios.php">Usuarios</a></li>
                 </div>
