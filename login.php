@@ -29,8 +29,9 @@
             }
 
         } else {
-            echo "Usuario o contraseña incorrectos.";
-            header("location: ./index.html");
+            $mensaje = "Usuario o contraseña incorrecta.";
+            echo "<script>alert('$mensaje');</script>";
+            header("refresh: 0; url=./index.html");
         }
     }
 

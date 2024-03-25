@@ -36,13 +36,6 @@
             margin: 0;
             padding: 0;
             font-family: "Raleway", sans-serif;
-            /* background-image: url("../../img/medio_logo_abajo.png");
-            background-repeat: no-repeat;
-            background-position: center bottom;
-            height: 97vh;
-            background-size: 1000px;
-            background-position-Y: 333px; */
-
         }
 
         /* MENU */
@@ -227,16 +220,16 @@
     <script>
         const elementos = document.querySelectorAll('.elemento');
 
-    elementos.forEach(elemento => {
-    elemento.addEventListener('mouseover', () => {
-        elemento.style.transition = 'background 3s';
-        elemento.style.background = 'linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%)';
-    });
+        elementos.forEach(elemento => {
+            elemento.addEventListener('mouseover', () => {
+            elemento.style.transition = 'background 3s';
+            elemento.style.background = 'linear-gradient(186deg, rgba(77,71,146,1) 0%, rgba(104,168,222,1) 100%)';
+        });
 
-    elemento.addEventListener('mouseleave', () => {
-        elemento.style.transition = 'background 0.3s';
-        elemento.style.background = '';
-    });
+        elemento.addEventListener('mouseleave', () => {
+            elemento.style.transition = 'background 0.3s';
+            elemento.style.background = '';
+        });
 });
 
 

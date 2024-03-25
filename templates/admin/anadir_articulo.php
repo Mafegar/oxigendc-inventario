@@ -80,7 +80,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Inventario</title>
 
     <style>
@@ -204,6 +205,7 @@
             background-color: red;
             color: white;
             border-radius: 5px;
+            cursor: pointer;
         }
 
         /* TABLA PARA PODER BORRAR ARTICULOS */
@@ -256,6 +258,24 @@
             border-radius: 5px;
         }
 
+        /* BOTONES FUNCIONES */
+
+        /* .entrada_boton, .entrada_salida{
+            display: flex;
+            align-items: center;
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .entrada_boton input{
+            border: 0px;
+            background-color: white;
+            cursor: pointer;
+        } */
+
 
     </style>
 
@@ -264,7 +284,7 @@
 
     <header>
         <div class="logo">
-            <a href="./inventario_admin.html"><img src="../../img/logo-oxigen.png" alt=""></a>
+            <a href="./inventario_admin.php"><img src="../../img/logo-oxigen.png" alt=""></a>
         </div>
         <nav>
             <ul>
@@ -304,10 +324,16 @@
                     <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
 
                     <input type="button" name="modificar" id="modificar" value="Modificar Articulo">
+                    <!-- <div class="entrada_boton">
+                        <i class="bi bi-plus-square-fill"></i></i>
+                    </div> -->
 
                     <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
-                    
+
                     <input type="button" name="salida" id="salida" value="Salida de Articulos">
+                    <!-- <div class="entrada_salida">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </div> -->
 
                     <input type="button" name="eliminar" id="eliminar" value="Eliminar Articulo">
                 </div>
@@ -491,12 +517,12 @@
 
                 <div class="titulo-modificar">
                     <h2>Modificar Articulo</h2>
-                    <!-- <form action="" method="post">
+                    <form action="" method="post">
                         <div class="buscador">
                             <input type="text" name="barra-buscar-mod" id="barra-buscar-mod" placeholder="Buscar Articulo">
                             <input type="submit" name="boton-buscar-mod" id="boton-buscar-mod" value="Buscar" onclick="mostrarDialogoModificar()">
                         </div>
-                    </form> -->
+                    </form>
                     <button id="cerrar-modificar">X</button>
                 </div>
 

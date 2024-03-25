@@ -135,6 +135,12 @@
             padding: 8px;
         }
 
+        /* EDITAR TAMAÑO CELDAS */
+        .tipo_mov{
+            width: 100px;
+            text-align: center;
+        }
+
     </style>
 
 
@@ -201,15 +207,15 @@
                         while($row = mysqli_fetch_assoc($result)){
                             if($row["tipo_movimiento"] == "Entrada"){
                                 echo "<tr style='background-color: rgba(0, 190, 0, 0.409);'>";
-                                echo "<td>" . $row["tipo_movimiento"] . "</td>";
+                                echo "<td class='tipo_mov'; style='font-weight: bold;'>" . $row["tipo_movimiento"] . "</td>";
                                 echo "<td>" . $row["nombre_articulo"] . "</td>";
                                 echo "<td>" . $row["unidades"] . "</td>";
                                 echo "<td>" . $row["fecha_movimiento"] . "</td>";
                                 echo "<td>" . $row["nombre_usuario"] . "</td>";
                                 echo "</tr>";
                             } else {
-                                echo "<tr style='background-color: rgba(190, 0, 0, 0.409);'>";
-                                echo "<td>" . $row["tipo_movimiento"] . "</td>";
+                                echo "<tr style='background-color: #ff00008a;'>";
+                                echo "<td class='tipo_mov'; style='font-weight: bold;'>" . $row["tipo_movimiento"] . "</td>";
                                 echo "<td>" . $row["nombre_articulo"] . "</td>";
                                 echo "<td>" . $row["unidades"] . "</td>";
                                 echo "<td>" . $row["fecha_movimiento"] . "</td>";
