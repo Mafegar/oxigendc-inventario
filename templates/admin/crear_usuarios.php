@@ -60,6 +60,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Usuarios</title>
 
     <style>
@@ -112,7 +113,7 @@
 
         .funciones-usuarios{
             display: flex;
-            justify-content: space-between;
+            justify-content: end;
         }
 
         .botones-acciones{
@@ -120,8 +121,32 @@
             gap: 10px;
         }
 
+        .buscador{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filtrar button i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-style: normal;
+        }
+
         #barra-buscar{
-            width: 205px;
+            width: 250px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: 400;
+        }
+
+        #buscar-tipo-user{
+            width: 150px;
+            height: 21px;
+            border-radius: 5px;
         }
 
         /* TABLA CREAR ARTICULO */
@@ -223,6 +248,10 @@
             padding-right: 15px;
         }
 
+        .eliminar_usario{
+            cursor: pointer;
+        }
+
         .usuarios-info h4{
             margin-top: 10px;
             margin-bottom: 10px;
@@ -245,6 +274,34 @@
         .ver-usuarios table th, td{
             border: 1px solid black;
             padding: 8px;
+        }
+
+        /* BOTONES DE ACCIONES */
+
+        #eliminar-usuario, #crear-usuario, #modificar-usuario{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        #eliminar-usuario{
+            color: red;
+        }
+
+        #eliminar-usuario i, #crear-usuario i, #modificar-usuario i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+            font-style: normal;
+            font-family: "Raleway", sans-serif;
         }
 
 
@@ -272,27 +329,40 @@
 
         <div class="container">
 
-            <h1>Usuarios Creados</h1>
-
-            <form class="funciones-usuarios" action="" method="post">
                 <div class="buscador">
-                    <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
-                    <select name="buscar-tipo-user" id="buscar-tipo-user">
-                        <option value="">Tipo de Usuario</option>
-                        <option value="Admin">Administrador</option>
-                        <option value="Users">Usuario</option>
-                    </select>
-                    <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
 
+                    <h1>Usuarios Creados</h1>
                     
+                    <div class="filtrar">
+                        <form action="" method="post">
+                            <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Usuario">
+                            <select name="buscar-tipo-user" id="buscar-tipo-user">
+                                <option value="">Tipo de Usuario</option>
+                                <option value="Admin">Administrador</option>
+                                <option value="Users">Usuario</option>
+                            </select>
+                            <button type="submit" name="boton-buscar" id="boton-buscar"><i class="bi bi-search">Buscar</i></button>
+                        </form>
+                    </div>
+
                 </div>
+            <form class="funciones-usuarios" action="" method="post">
 
                 <div class="botones-acciones">
-                    <input type="button" name="crear-articulo" id="crear-usuario" value="Crear Usuario">
+                    <div id="crear-usuario">
+                        <i class="bi bi-clipboard2-plus-fill">Crear Usuario</i>
+                    </div>
+                    <!-- <input type="button" name="crear-usuario" id="crear-usuario" value="Crear Usuario"> -->
 
-                    <input type="button" name="modificar-usuario" id="modificar-usuario" value="Modificar Usuarios">
-
-                    <input type="button" name="eliminar-usuario" id="eliminar-usuario" value="Eliminar Usuarios">
+                    <div id="modificar-usuario">
+                    <i class="bi bi-pen-fill">Modificar Usuarios</i>
+                    </div>
+                    <!-- <input type="button" name="modificar-usuario" id="modificar-usuario" value="Modificar Usuarios"> -->
+                    
+                    <div id="eliminar-usuario">
+                        <i class="bi bi-trash-fill">Eliminar Usuarios</i>
+                    </div>
+                    <!-- <input type="button" name="eliminar-usuario" id="eliminar-usuario" value="Eliminar Usuarios"> -->
                 </div>
             </form>
             <br>
@@ -419,7 +489,7 @@
                                         echo "<h4> User: <span>". $row["username"] ."</span></h4>";
                                     echo "</div>";
                                     echo "<input type='hidden' name='id_usuario' value='" . $row["id_Usuario"] . "'>";
-                                    echo "<input type='submit' name='eliminar_usario' value='Eliminar'>";
+                                    echo "<input type='submit' name='eliminar_usario' class='eliminar_usario' value='Eliminar'>";
                                 echo "</form>";
                             echo "</div>";
                         }
@@ -462,7 +532,10 @@
                                     echo "</tr>";
                                 }
                             } else {
-                                echo "No hay usuarios en la base de datos.";
+                                $mensaje_alert = "No se encontro ningun usuario con ese nombre.";
+                                $mensaje = "No hay usuarios con ese nombre.";
+                                echo "<script>alert('$mensaje_alert');</script>";
+                                echo "<td style='text-align: center' colspan='11'>". $mensaje ."</td>";  
                             }
 
 

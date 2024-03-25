@@ -30,10 +30,39 @@
         $unidades = $_POST["unidades"];
         $tipo_articulo = $_POST["tipo_articulo"];
 
-        $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-            VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+        // Hacemos una consulta para obtener los datos de los articulos que hay en la base de datos.
+        $sqlArticulo = "SELECT * FROM articulos";
+        $resultArticulo = mysqli_query($conn, $sqlArticulo);
 
-        if($conn->query($sql) === TRUE){
+         
+
+        // Verificamos si el articulo ya existe en la base de datos.
+        $si_exsiste = false;
+
+        while($row = mysqli_fetch_assoc($resultArticulo)){
+            if($row["nombre"] == $nombre && $row["marca"] == $marca && $row["modelo"] == $modelo && $row["detalles"] == $detalles && $row["tipo_producto"] == $tipo_producto && $row["ubicacion"] == $ubicacion){
+                $si_exsiste = true;
+                break;
+            }
+        }
+
+        if($si_exsiste == true){
+            // Actualizamos las unidades del articulo en la base de datos si el articulo que crea ya existe.
+            $sqlUpdate = "UPDATE articulos SET unidades = unidades + $unidades WHERE nombre = '$nombre' AND marca = '$marca' AND modelo = '$modelo' AND detalles = '$detalles' AND tipo_producto = '$tipo_producto' AND ubicacion = '$ubicacion'";
+            $resultUpdate = mysqli_query($conn, $sqlUpdate);
+        } else {
+            // Verificamos si el articulo es un equipo para insertar las fechas de control.
+            if($tipo_producto == "Equipo"){
+                $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+            } else {
+                $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+            } 
+            $resultUpdate = mysqli_query($conn, $sql);
+        }
+
+        if($conn->query($sql) === TRUE or $conn->query($sqlUpdate) === TRUE){
             $mensaje = "Articulo creado con éxito.";
             echo "<script> alert('". $mensaje ."') </script>";
             header("refresh: 0; url=anadir_articulo.php");
@@ -231,13 +260,33 @@
             $cambio_contra = 0;
         }
 
+        $sqlContraseña = "SELECT password FROM usuarios WHERE id_Usuario = '$id_usuario'";
+        $resultPassword = mysqli_query($conn, $sqlContraseña);
+        $row = mysqli_fetch_assoc($resultPassword);
+
         // Verificamos si se a solicitado un cambio de contraseña.
         if($cambio_contra == 1){
-            $password = password_hash($nuevo_password, PASSWORD_DEFAULT);
 
-            // Actualizar los datos del usuario en la base de datos junto a la contraseña.
-            $sql = "UPDATE usuarios SET nombre = '$nombre', primer_apellido = '$primer_apellido', segundo_apellido = '$segundo_apellido', username = '$username', password = '$password', tipo_usuario = '$tipo_usuario' WHERE id_Usuario = '$id_usuario'";
+            if($nuevo_password == "" || $nuevo_password == null){
+                $mensaje = "La contraseña no puede estar vacia.";
+                echo "<script> alert('". $mensaje ."') </script>";
+                header("refresh: 0; url=crear_usuarios.php");
 
+            } else {
+                
+                if(password_verify($nuevo_password, $row["password"])){
+                    $mensaje = "La contraseña no puede ser la misma que la anterior.";
+                    echo "<script> alert('". $mensaje ."') </script>";
+                    header("refresh: 0; url=crear_usuarios.php");
+
+                } else {
+                    $password = password_hash($nuevo_password, PASSWORD_DEFAULT);
+    
+                    // Actualizar los datos del usuario en la base de datos junto a la contraseña.
+                    $sql = "UPDATE usuarios SET nombre = '$nombre', primer_apellido = '$primer_apellido', segundo_apellido = '$segundo_apellido', username = '$username', password = '$password', tipo_usuario = '$tipo_usuario' WHERE id_Usuario = '$id_usuario'";
+                }
+            }
+            
         } else {
             // Actualizar los datos del usuario en la base de datos sin la contraseña.
             $sql = "UPDATE usuarios SET nombre = '$nombre', primer_apellido = '$primer_apellido', segundo_apellido = '$segundo_apellido', username = '$username', tipo_usuario = '$tipo_usuario' WHERE id_Usuario = '$id_usuario'";

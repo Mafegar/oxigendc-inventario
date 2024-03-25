@@ -86,8 +86,20 @@
 
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
         
+        :root{
+            /* Paleta de colores empresa. */
+            --azul-oscuro: #4d4792;
+            --verde-azul: #86b398;
+            --verde:  #a2c037;
+            --azul: #68a8de;
+            --negro: #000000;
+            --blanco: #ffffff;
+
+
+        }
+
         html,body{
             margin: 0;
             padding: 0;
@@ -128,6 +140,7 @@
         #cuerpo{
             width: 1100px;
             margin: auto;
+            font-family: "Raleway", sans-serif;
         }
 
         .container h1{
@@ -183,14 +196,22 @@
         .botones-acciones{
             display: flex;
             gap: 10px;
+            overflow: hidden;
         }
 
         #barra-buscar{
-            width: 205px;
+            width: 250px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: 400;
+            height: 20px;
         }
-
-        .buscador select{
-            height: 21px;
+        
+        #buscar-tipo-arti{
+            width: 150px;
+            height: 23px;
+            border-radius: 5px;
         }
 
 
@@ -208,6 +229,18 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .form-salida label{
+            font-weight: 600;
+        }
+
+        .form-entrada label{
+            font-weight: 600;
+        }
+
+        .form-crear label{
+            font-weight: 600;
         }
 
         /* TABLA PARA PODER BORRAR ARTICULOS */
@@ -233,6 +266,10 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        #eliminar-articulo form input{
+            cursor: pointer;
+        }
         
         .articulo-eliminar, .mod-articulo{
             border: 1px solid black;
@@ -247,9 +284,16 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
+        
+        .articulo-info h4 span{
+            font-weight: 600;
+        }
+        
 
         .mod-articulo label{
             margin-left: 10px;
+            font-weight: 600;
+            font-size: 1em;
         }
         
         .mod-articulo #modificar-articulo{
@@ -258,6 +302,7 @@
             color: white;
             padding: 5px;
             border-radius: 5px;
+            cursor: pointer;
         }
         
 
@@ -269,42 +314,102 @@
             align-items: center;
         }
 
-        .entrada_articulo, .salida_articulo, .eliminar_articulo, .boton_modificar, .boton_crear{
+        #boton-buscar{
+            font-family: "Raleway", sans-serif;
+            width: 100px;
+            color: var(--negro);
+            border-radius: 5px;
+            border: 1px solid var(--negro);
+            cursor: pointer;
+            height: 21px;
+            background-color: #d9d9d9;
+            font-weight: 600;
+            height: 22px;
+        }
+
+        .filtrar{
+            height: 20px;
+        }
+
+        .filtrar button i{
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid black;
+            gap: 10px;
+            font-style: normal;
+        }
+
+        .boton_crear, .entrada_articulo, .salida_articulo, .eliminar_articulo, .boton_modificar{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 5px;
             text-align: center;
+            border: 1px solid black;
             border-radius: 5px;
+            font-weight: 600;
             cursor: pointer;
         }
 
-        .entrada_articulo input, .salida_articulo input, .eliminar_articulo input, .boton_modificar input, .boton_crear input{
+        .boton_crear button, .entrada_articulo button, .salida_articulo button, .eliminar_articulo button, .boton_modificar button{
             border: 0px;
-            background-color: white;
-            cursor: pointer;
+            background-color: ;
         }
+                                                                                                                                                                                                                                                                                                                                                      
+        /* .boton_modificar{
+            border: 1px solid var(--verde-azul);
+            color: var(--verde-azul);
+        }
+
+        .boton_modificar:hover{
+            background-color: var(--verde-azul);
+            color: white;
+            transition: 0.5s;
+        }
+
+        .entrada_articulo{
+            border: 1px solid var(--verde);
+            color: var(--verde);
+        }
+
+        .entrada_articulo:hover{
+            background-color: var(--verde);
+            color: white;
+            transition: 0.5s;
+        }
+
+        .salida_articulo{
+            border: 1px solid var(--azul);
+            color: var(--azul);
+        }
+
+        .salida_articulo:hover{
+            background-color: var(--azul);
+            color: white;
+            transition: 0.5s;
+        } */
 
         .eliminar_articulo{
+            color: red;
             border: 1px solid red;
-            color: red;
         }
 
-        .eliminar_articulo input{
-            color: red;
-        }
-
-        .eliminar_articulo i{
-            font-size: 1em;
+        .eliminar_articulo i, .entrada_articulo i, .salida_articulo i, .boton_modificar i, .boton_crear i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
             font-style: normal;
             font-family: "Raleway", sans-serif;
         }
 
-        .eliminar_articulo:hover{
+        /* .eliminar_articulo:hover{
             background-color: red;
             color: white;
-        }
+            transition: 0.5s;
+            font-weight: bold;
+        } */
 
 
     </style>
@@ -335,7 +440,7 @@
             <div class="buscador_articulo">
                 <h1>Articulos en el Inventario</h1>
 
-                <div class="filrar">    
+                <div class="filtrar">    
                     <form action="" method="post">
                         <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
 
@@ -346,7 +451,7 @@
                             <option value="Herramienta">Herramienta</option>
                         </select>
 
-                        <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
+                        <button type="submit" name="boton-buscar" id="boton-buscar"><i class="bi bi-search">Buscar</i></button>
                     </form>
                 </div>
             </div>
@@ -355,22 +460,22 @@
 
                 <div class="botones-acciones">
 
-                    <div class="boton_crear" name="" id="">
-                        <i class="bi bi-clipboard2-plus-fill"></i><input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
+                    <div class="boton_crear" name="crear" id="crear">
+                        <i class="bi bi-clipboard2-plus-fill">Crear Articulo</i>
                     </div>
                     
 
-                    <div class="boton_modificar">
-                        <i class="bi bi-pen-fill"></i><input type="button" name="modificar" id="modificar" value="Modificar Articulo">
+                    <div class="boton_modificar" name="modificar" id="modificar">
+                        <i class="bi bi-pen-fill">Modificar Articulo</i>
                     </div>
                     
 
-                    <div class="entrada_articulo">
-                        <i class="bi bi-file-earmark-plus-fill"></i><input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+                    <div class="entrada_articulo" name="entrada" id="entrada">
+                        <i class="bi bi-file-earmark-plus-fill">Entrada de Articulos</i>
                     </div>
      
-                    <div class="salida_articulo">
-                        <i class="bi bi-file-earmark-x-fill"></i><input type="button" name="salida" id="salida" value="Salida de Articulos">
+                    <div class="salida_articulo" name="salida" id="salida">
+                        <i class="bi bi-file-earmark-x-fill">Salida de Articulos</i>
                     </div>
                     
                     <div class="eliminar_articulo" name="eliminar" id="eliminar">
@@ -536,10 +641,10 @@
                             echo "<div class='articulo-eliminar'>";
                                 echo "<form action='admin_funciones.php' method='post'>";
                                     echo "<div class='articulo-info'>";
-                                        echo "<h4> Articulo: <span>" . $row["nombre"] . "</span></h4>";
-                                        echo "<h4> Tipo Producto: <span>" . $row["tipo_producto"] . "</span></h4>";
-                                        echo "<h4> Ubicación: <span>" . $row["ubicacion"] . "</span></h4>";
-                                        echo "<h4> Unidades: <span>" . $row["unidades"] . "</span></h4>";
+                                        echo "<h4> Articulo: <span style='font-weight: 500;'>" . $row["nombre"] . "</span></h4>";
+                                        echo "<h4> Tipo Producto: <span style='font-weight: 500;'>" . $row["tipo_producto"] . "</span></h4>";
+                                        echo "<h4> Ubicación: <span style='font-weight: 500;'>" . $row["ubicacion"] . "</span></h4>";
+                                        echo "<h4> Unidades: <span style='font-weight: 500;'>" . $row["unidades"] . "</span></h4>";
                                     echo "</div>";
                                     echo "<input type='hidden' name='id_articulo' value='" . $row["id_Articulo"] . "'>";
                                     echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo' value='Eliminar Articulo'>";
@@ -619,7 +724,7 @@
 
                                         echo "<label for='proveedor'>Proveedor: </label>";
                                         echo "<input type='text' name='proveedor' id='proveedor' value='". $row["proveedor"] ."'>";
-
+                                        echo "<br><br>";
                                         echo "<label for='unidades'>Unidades: </label>";
                                         echo "<input type='number' name='unidades' id='unidades' value='". $row["unidades"] ."'>";
 
@@ -680,8 +785,14 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
-                                        echo "<td>" . $row["fecha_control"] . "</td>";
-                                        echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        if($row["fecha_control"] !== NULL && $row["fecha_control"] !== NULL){
+                                            echo "<td>" . $row["fecha_control"] . "</td>";
+                                            echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        } else {
+                                            echo "<td> 0000-00-00 </td>";
+                                            echo "<td> 0000-00-00 </td>";
+                                        }
+                                       
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
@@ -695,8 +806,13 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
-                                        echo "<td>" . $row["fecha_control"] . "</td>";
-                                        echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        if($row["fecha_control"] !== NULL && $row["fecha_control"] !== NULL){
+                                            echo "<td>" . $row["fecha_control"] . "</td>";
+                                            echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        } else {
+                                            echo "<td> 0000-00-00 </td>";
+                                            echo "<td> 0000-00-00 </td>";
+                                        }
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
@@ -706,7 +822,11 @@
                                     
                                 } 
                             } else {
-                                echo "<tr><td colspan='9'>No hay artículos</td></tr>";
+                                $mensaje_alert = "No se encontro ningun articulo con ese nombre.";
+                                $mensaje = "No hay articulos en el inventario con ese nombre.";
+                                echo "<script>alert('$mensaje_alert');</script>";
+                                echo "<td style='text-align: center' colspan='11'>". $mensaje ."</td>";
+
                             }
                         ?>
                 
@@ -727,12 +847,11 @@
         }
 
         // Botones para abrir los dialogos.
-        const hacerEntrada = document.querySelector("#entrada");
-        const hacerSalida = document.querySelector("#salida");
-        const hacerArticulo = document.querySelector("#crear-articulo");
-        const articuloEliminado = document.querySelector("#eliminar");
-        const articuloModificar = document.querySelector("#modificar");
-        const BuscarModificar = document.querySelector("#boton-buscar-mod");
+        const hacerEntrada = document.querySelector(".entrada_articulo");
+        const hacerSalida = document.querySelector(".salida_articulo");
+        const hacerArticulo = document.querySelector(".boton_crear");
+        const articuloEliminado = document.querySelector(".eliminar_articulo");
+        const articuloModificar = document.querySelector(".boton_modificar");
 
 
         // Botones para cerrar los dialogos.

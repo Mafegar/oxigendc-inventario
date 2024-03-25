@@ -393,8 +393,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
-
                         <?php
                             // Verificamos si hay articulos en la base de datos.
                             if($result->num_rows > 0){
@@ -407,8 +405,14 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
-                                        echo "<td>" . $row["fecha_control"] . "</td>";
-                                        echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        if($row["fecha_control"] !== NULL && $row["fecha_control"] !== NULL){
+                                            echo "<td>" . $row["fecha_control"] . "</td>";
+                                            echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        } else {
+                                            echo "<td> 0000-00-00 </td>";
+                                            echo "<td> 0000-00-00 </td>";
+                                        }
+                                       
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
@@ -422,8 +426,13 @@
                                         echo "<td>" . $row["modelo"] . "</td>";
                                         echo "<td>" . $row["detalles"] . "</td>";
                                         echo "<td>" . $row["tipo_producto"] . "</td>";
-                                        echo "<td>" . $row["fecha_control"] . "</td>";
-                                        echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        if($row["fecha_control"] !== NULL && $row["fecha_control"] !== NULL){
+                                            echo "<td>" . $row["fecha_control"] . "</td>";
+                                            echo "<td>" . $row["fecha_sig_control"] . "</td>";
+                                        } else {
+                                            echo "<td> 0000-00-00 </td>";
+                                            echo "<td> 0000-00-00 </td>";
+                                        }
                                         echo "<td>" . $row["ubicacion"] . "</td>";
                                         echo "<td>" . $row["proveedor"] . "</td>";
                                         echo "<td>" . $row["unidades"] . "</td>";
@@ -433,7 +442,11 @@
                                     
                                 } 
                             } else {
-                                echo "<tr><td colspan='9'>No hay artículos</td></tr>";
+                                $mensaje_alert = "No se encontro ningun articulo con ese nombre.";
+                                $mensaje = "No hay articulos en el inventario con ese nombre.";
+                                echo "<script>alert('$mensaje_alert');</script>";
+                                echo "<td style='text-align: center' colspan='11'>". $mensaje ."</td>";
+
                             }
                         ?>
                 
