@@ -85,6 +85,8 @@
     <title>Inventario</title>
 
     <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
         
         html,body{
             margin: 0;
@@ -175,7 +177,7 @@
 
         .funciones-articulos{
             display: flex;
-            justify-content: space-between;
+            justify-content: end;
         }
 
         .botones-acciones{
@@ -257,11 +259,19 @@
             padding: 5px;
             border-radius: 5px;
         }
+        
 
         /* BOTONES FUNCIONES */
 
-        /* .entrada_boton, .entrada_salida{
+        .buscador_articulo{
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .entrada_articulo, .salida_articulo, .eliminar_articulo, .boton_modificar, .boton_crear{
+            display: flex;
+            justify-content: center;
             align-items: center;
             border: 1px solid black;
             padding: 5px;
@@ -270,11 +280,31 @@
             cursor: pointer;
         }
 
-        .entrada_boton input{
+        .entrada_articulo input, .salida_articulo input, .eliminar_articulo input, .boton_modificar input, .boton_crear input{
             border: 0px;
             background-color: white;
             cursor: pointer;
-        } */
+        }
+
+        .eliminar_articulo{
+            border: 1px solid red;
+            color: red;
+        }
+
+        .eliminar_articulo input{
+            color: red;
+        }
+
+        .eliminar_articulo i{
+            font-size: 1em;
+            font-style: normal;
+            font-family: "Raleway", sans-serif;
+        }
+
+        .eliminar_articulo:hover{
+            background-color: red;
+            color: white;
+        }
 
 
     </style>
@@ -302,40 +332,51 @@
 
         <div class="container">
         
-            <h1>Articulos en el Inventario</h1>
+            <div class="buscador_articulo">
+                <h1>Articulos en el Inventario</h1>
+
+                <div class="filrar">    
+                    <form action="" method="post">
+                        <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
+
+                        <select name="buscar-tipo-arti" id="buscar-tipo-arti">
+                            <option value="">Escoja una opcion</option>
+                            <option value="Equipo">Equipo</option>
+                            <option value="Kit">Kit Maleta</option>
+                            <option value="Herramienta">Herramienta</option>
+                        </select>
+
+                        <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
+                    </form>
+                </div>
+            </div>
 
             <form class="funciones-articulos" action="" method="post">
-                <div class="buscador">
-                    <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
-
-                    <select name="buscar-tipo-arti" id="buscar-tipo-arti">
-                        <option value="">Escoja una opcion</option>
-                        <option value="Equipo">Equipo</option>
-                        <option value="Kit">Kit Maleta</option>
-                        <option value="Herramienta">Herramienta</option>
-                    </select>
-
-                    <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
-                </div>
-
-
 
                 <div class="botones-acciones">
-                    <input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
 
-                    <input type="button" name="modificar" id="modificar" value="Modificar Articulo">
-                    <!-- <div class="entrada_boton">
-                        <i class="bi bi-plus-square-fill"></i></i>
-                    </div> -->
+                    <div class="boton_crear" name="" id="">
+                        <i class="bi bi-clipboard2-plus-fill"></i><input type="button" name="crear-articulo" id="crear-articulo" value="Crear Articulo">
+                    </div>
+                    
 
-                    <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+                    <div class="boton_modificar">
+                        <i class="bi bi-pen-fill"></i><input type="button" name="modificar" id="modificar" value="Modificar Articulo">
+                    </div>
+                    
 
-                    <input type="button" name="salida" id="salida" value="Salida de Articulos">
-                    <!-- <div class="entrada_salida">
-                        <i class="bi bi-x-circle-fill"></i>
-                    </div> -->
-
-                    <input type="button" name="eliminar" id="eliminar" value="Eliminar Articulo">
+                    <div class="entrada_articulo">
+                        <i class="bi bi-file-earmark-plus-fill"></i><input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
+                    </div>
+     
+                    <div class="salida_articulo">
+                        <i class="bi bi-file-earmark-x-fill"></i><input type="button" name="salida" id="salida" value="Salida de Articulos">
+                    </div>
+                    
+                    <div class="eliminar_articulo" name="eliminar" id="eliminar">
+                        <i class="bi bi-trash-fill">Eliminar Articulo</i>
+                    </div>
+                    
                 </div>
             </form>
             <br>
