@@ -110,7 +110,7 @@
             padding-right: 5px;
         }
 
-        nav ul li a:hover {
+        nav ul li:hover a {
             font-weight: bold;
             color: #477296;
             
@@ -122,11 +122,11 @@
             display: inline-block; */
         }
 
-        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon{
+        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon, nav ul li:hover .bi-house{
             display: none;
         }
 
-        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill{
+        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill, nav ul li:hover .bi-house-fill{
             display: block !important;
             background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
             -webkit-background-clip: text;

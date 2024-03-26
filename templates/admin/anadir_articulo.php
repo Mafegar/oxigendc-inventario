@@ -141,7 +141,7 @@
             padding-right: 5px;
         }
 
-        nav ul li a:hover {
+        nav ul li:hover a {
             font-weight: bold;
             color: #477296;
 
@@ -412,7 +412,6 @@
 
         .boton_crear button, .entrada_articulo button, .salida_articulo button, .eliminar_articulo button, .boton_modificar button{
             border: 0px;
-            background-color: ;
         }
 
         .eliminar_articulo{
