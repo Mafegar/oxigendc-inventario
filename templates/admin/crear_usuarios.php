@@ -65,7 +65,8 @@
 
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+        /* Importar tipografia */
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
         html,body{
             margin: 0;
@@ -91,11 +92,46 @@
 
         nav ul li{
             list-style: none;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
         }
 
         nav ul li a{
             text-decoration: none;
             color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        nav ul li a:hover {
+            font-weight: bold;
+            color: #477296;
+            
+            /* border-bottom: 3px solid;
+            border-image: var(--gradient_verdeAzul) 1;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; */
+        }
+
+        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon{
+            display: none;
+        }
+
+        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .logo img{
@@ -107,13 +143,16 @@
         #cuerpo{
             width: 1100px;
             margin: auto;
+            margin-top: 20px;
         }
 
         /* FUNCIONES DE ARTICULOS */
 
         .funciones-usuarios{
             display: flex;
-            justify-content: end;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
         .botones-acciones{
@@ -141,11 +180,24 @@
             border: 1px solid black;
             border-radius: 5px;
             font-weight: 400;
+            height: 20px;
         }
+
+        #boton-buscar {
+            font-family: "Raleway", sans-serif;
+            width: 100px;
+            color: var(--negro);
+            border-radius: 5px;
+            border: 1px solid var(--negro);
+            cursor: pointer;
+            background-color: #d9d9d9;
+            font-weight: 600;
+            height: 22px;
+        } 
 
         #buscar-tipo-user{
             width: 150px;
-            height: 21px;
+            height: 23px;
             border-radius: 5px;
         }
 
@@ -316,11 +368,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a></li>
-                <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+            <li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./inventario_admin.php'>Inicio</a></li>
+                <li><i class="bi bi-box-seam-fill" style="display: none;"></i><i class="bi bi-box-seam"><a href="./anadir_articulo.php"></i>Inventario</a></li>
+                <li><i class="bi bi-person-fill" style="display: none;"></i><i class="bi bi-person"></i><a href="./crear_usuarios.php">Usuarios</a></li>
+                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
+                <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>

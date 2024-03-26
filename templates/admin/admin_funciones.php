@@ -122,6 +122,7 @@
     if(isset($_POST["hacer-salida"])){
         $nombre_sali = $_POST["nombre-sali"];
         $unidades_sali = $_POST["unidades-sali"];
+        $ubicacion_sali = $_POST["ubi"];
         $fecha_sali = $_POST["fecha-oper-sali"];
 
         $sqlUnidades = "SELECT unidades FROM articulos WHERE nombre = '$nombre_sali'";
@@ -145,14 +146,20 @@
             $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
 
             if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-                
-                // Insertamos la entrada que hacemos en la tabla de movimientos.
-                $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
-                    VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+
+                if($ubicacion_sali == "Oxigen"){
+                    // Insertamos la entrada que hacemos en la tabla de movimientos.
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Oxigen' ,'$nombre_usuario_sali')";
+                } else {
+                    // Insertamos la entrada que hacemos en la tabla de movimientos.
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Obra' ,'$nombre_usuario_sali')";
+                }
 
                 // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
                 if($conn->query($sqlMovimiento) === TRUE){
-                    $mensaje = "Entrada realizada con éxito.";
+                    $mensaje = "Salida realizada con éxito.";
                     echo "<script> alert('". $mensaje ."') </script>";
                     header("refresh: 0; url=anadir_articulo.php");
                     exit();

@@ -50,7 +50,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Ver Movimientos</title>
 
     <style>
@@ -69,7 +70,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 1000px;
+            width: 1100px;
             margin: auto;
             margin-top: 20px;
         }
@@ -81,11 +82,46 @@
 
         nav ul li{
             list-style: none;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
         }
 
         nav ul li a{
             text-decoration: none;
             color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        nav ul li a:hover {
+            font-weight: bold;
+            color: #477296;
+
+            /* border-bottom: 3px solid;
+            border-image: var(--gradient_verdeAzul) 1;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; */
+        }
+
+        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon, nav ul li:hover .bi-house{
+            display: none;
+        }
+
+        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill, nav ul li:hover .bi-house-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .logo img{
@@ -95,8 +131,9 @@
         /* CUERPO */
 
         #cuerpo{
-            width: 1000px;
+            width: 1100px;
             margin: auto;
+            margin-top: 20px;
         }
 
         /* FUNCIONES DE ARTICULOS */
@@ -104,6 +141,7 @@
         .funciones-movimientos{
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
@@ -117,13 +155,24 @@
         }
 
         #barra-buscar{
-            width: 205px;
+            width: 250px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: 400;
+            height: 20px;
+        }
+
+        #buscar-tipo-mov{
+            width: 150px;
+            height: 23px;
+            border-radius: 5px;
         }
 
         /* TABLAS DE MOVIMIENTOS */
 
         .tabla-movimientos{
-            width: 1000px;
+            width: 1100px;
             margin-bottom: 20px;
         }
 
@@ -138,8 +187,12 @@
         }
 
         /* EDITAR TAMAÑO CELDAS */
-        .tipo_mov{
+        .tipo_mov, .tipo_mov_salida{
             width: 100px;
+            text-align: center;
+        }
+
+        .unid_mov, .fecha_mov, .nom_mov, .art_mov, .unid_mov_salida, .fecha_mov_salida, .nom_mov_salida, .art_mov_salida, .ubi_mov{
             text-align: center;
         }
 
@@ -157,30 +210,31 @@
             <ul>
                 <?php
                     if($_SESSION["tipo_usuario"] == 1){
-                        echo "<li><a href='./admin/inventario_admin.php'>Inicio</a></li>";
-                        echo "<li><a href='./admin/anadir_articulo.php'>Inventario</a></li>";
-                        echo "<li><a href='./admin/crear_usuarios.php'>Usuarios</a></li>";
+                        echo "<li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./admin/inventario_admin.php'>Inicio</a></li>";
+                        echo "<li><i class='bi bi-box-seam-fill' style='display: none;'></i><i class='bi bi-box-seam'><a href='./admin/anadir_articulo.php'></i>Inventario</a></li>";
+                        echo "<li><i class='bi bi-person-fill' style='display: none;'></i><i class='bi bi-person'></i><a href='./admin/crear_usuarios.php'>Usuarios</a></li>";
 
                     } else if($_SESSION["tipo_usuario"] == 0) {
-                        echo "<li><a href='./users/inventario_user.php'>Inicio</a></li>";
-                        echo "<li><a href='./users/anadir_articulo_user.php'>Inventario</a></li>";
+                        echo "<li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./users/inventario_user.php'>Inicio</a></li>";
+                        echo "<li><i class='bi bi-box-seam-fill' style='display: none;'></i><i class='bi bi-box-seam'><a href='./users/anadir_articulo_user.php'></i>Inventario</a></li>";
 
                     }
                 ?>
-                <li><a href="./ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="./ver_movimientos.php">Historial de Movimientos</a></li>                
+                <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
 
-
     <div id="cuerpo">
-        <h1>Movimientos Realizados</h1>
+        
     <div class="movimientos">
 
         <form action="" method="post">
 
             <div class="funciones-movimientos">
+                <h1>Movimientos Realizados</h1>
+
                 <div class="buscador">
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
                     <select name="buscar-tipo-mov" id="buscar-tipo-mov">
@@ -201,6 +255,7 @@
                         <th>Articulo</th>
                         <th>Cantidad</th>
                         <th>Fecha Movimiento</th>
+                        <th>Unidades</th>
                         <th>Usuario</th>
                         
                     </tr>
@@ -210,18 +265,20 @@
                             if($row["tipo_movimiento"] == "Entrada"){
                                 echo "<tr style='background-color: rgba(0, 190, 0, 0.409);'>";
                                 echo "<td class='tipo_mov'; style='font-weight: bold;'>" . $row["tipo_movimiento"] . "</td>";
-                                echo "<td>" . $row["nombre_articulo"] . "</td>";
-                                echo "<td>" . $row["unidades"] . "</td>";
-                                echo "<td>" . $row["fecha_movimiento"] . "</td>";
-                                echo "<td>" . $row["nombre_usuario"] . "</td>";
+                                echo "<td class='art_mov'>" . $row["nombre_articulo"] . "</td>";
+                                echo "<td class='unid_mov';>" . $row["unidades"] . "</td>";
+                                echo "<td class='fecha_mov';>" . $row["fecha_movimiento"] . "</td>";
+                                echo "<td class='ubi_mov'>" . $row["ubicacion"] . "</td>";
+                                echo "<td class='nom_mov';>" . $row["nombre_usuario"] . "</td>";
                                 echo "</tr>";
                             } else {
                                 echo "<tr style='background-color: #ff00008a;'>";
-                                echo "<td class='tipo_mov'; style='font-weight: bold;'>" . $row["tipo_movimiento"] . "</td>";
-                                echo "<td>" . $row["nombre_articulo"] . "</td>";
-                                echo "<td>" . $row["unidades"] . "</td>";
-                                echo "<td>" . $row["fecha_movimiento"] . "</td>";
-                                echo "<td>" . $row["nombre_usuario"] . "</td>";
+                                echo "<td class='tipo_mov_salida'; style='font-weight: bold;'>" . $row["tipo_movimiento"] . "</td>";
+                                echo "<td class='art_mov_salida'>" . $row["nombre_articulo"] . "</td>";
+                                echo "<td class='unid_mov_salida'>" . $row["unidades"] . "</td>";
+                                echo "<td class='fecha_mov_salida'>" . $row["fecha_movimiento"] . "</td>";
+                                echo "<td class='ubi_mov'>" . $row["ubicacion"] . "</td>";
+                                echo "<td class='nom_mov_salida'>" . $row["nombre_usuario"] . "</td>";
                                 echo "</tr>";
                             }
                             

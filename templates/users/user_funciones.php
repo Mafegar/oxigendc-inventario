@@ -44,8 +44,9 @@
 
             // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
             if($conn->query($sqlMovimiento) === TRUE){
-                echo "Entrada realizada con éxito.";
-                header("Location: anadir_articulo.php");
+                $mensaje = "Entrada realizada con éxito.";
+                echo "<script> alert('". $mensaje ."') </script>";
+                header("refresh: 0; url=anadir_articulo_user.php");
                 exit();
             } else {
                 echo "Error al realizar la entrada: " . $conn->error;
@@ -61,8 +62,12 @@
     if(isset($_POST["hacer-salida"])){
         $nombre_sali = $_POST["nombre-sali"];
         $unidades_sali = $_POST["unidades-sali"];
+        $ubicacion_sali = $_POST["ubi"];
         $fecha_sali = $_POST["fecha-oper-sali"];
 
+        $sqlUnidades = "SELECT unidades FROM articulos WHERE nombre = '$nombre_sali'";
+        $result = mysqli_query($conn, $sqlUnidades);
+        $unidades = mysqli_fetch_assoc($result)["unidades"];
 
         // Consulta para obtener el nombre del usuario que ha iniciado sesión.
         $sqlNombreUsuaioSali = "SELECT nombre FROM usuarios WHERE username = '$username'";
@@ -72,30 +77,45 @@
         // Consulta para obtener el id del articulo.
         $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
 
-        // Insertamos la salida del articulo en la tabla de salidas.
-        $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
+        if($unidades < 0 || $unidades >= $unidades_sali){
+            // Insertamos la salida del articulo en la tabla de salidas.
+            $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
             VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
 
-        // Actualizamos las unidades del articulo en la tabla de articulos.
-        $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
+            // Actualizamos las unidades del articulo en la tabla de articulos.
+            $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
 
-        if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
-            
-            // Insertamos la entrada que hacemos en la tabla de movimientos.
-            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, nombre_usuario)
-                VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+            if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
+                
+                if($ubicacion_sali == "Oxigen"){
+                    // Insertamos la entrada que hacemos en la tabla de movimientos.
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Oxigen' ,'$nombre_usuario_sali')";
+                } else {
+                    // Insertamos la entrada que hacemos en la tabla de movimientos.
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Obra' ,'$nombre_usuario_sali')";
+                }
 
-            // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
-            if($conn->query($sqlMovimiento) === TRUE){
-                echo "Salida realizada con éxito.";
-                header("Location: ./anadir_articulo_user.php");
-                exit();
+                // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
+                if($conn->query($sqlMovimiento) === TRUE){
+                    $mensaje = "Salida realizada con éxito.";
+                    echo "<script> alert('". $mensaje ."') </script>";
+                    header("refresh: 0; url=anadir_articulo_user.php");
+                    exit();
+                } else {
+                    echo "Error al realizar la salida: " . $conn->error;
+                }
             } else {
                 echo "Error al realizar la salida: " . $conn->error;
             }
         } else {
-            echo "Error al realizar la salida: " . $conn->error;
+            $mensaje = "No hay suficientes unidades para realizar la salida.";
+            echo "<script> alert('". $mensaje ."') </script>";
+            header("refresh:0.5;url=anadir_articulo_user.php");
+            exit();
         }
+        
     }
     /**------------------------------------------------------------------------ */
 

@@ -85,7 +85,7 @@
     <title>Inventario</title>
 
     <style>
-
+        /* Importar tipografia */
         @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
         
         :root{
@@ -96,8 +96,7 @@
             --azul: #68a8de;
             --negro: #000000;
             --blanco: #ffffff;
-
-
+            --gradient_verdeAzul: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
         }
 
         html,body{
@@ -124,11 +123,46 @@
 
         nav ul li{
             list-style: none;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
         }
 
         nav ul li a{
             text-decoration: none;
             color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        nav ul li a:hover {
+            font-weight: bold;
+            color: #477296;
+
+            /* border-bottom: 3px solid;
+            border-image: var(--gradient_verdeAzul) 1;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; */
+        }
+
+        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon, nav ul li:hover .bi-house{
+            display: none;
+        }
+
+        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill, nav ul li:hover .bi-house-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .logo img{
@@ -141,6 +175,7 @@
             width: 1100px;
             margin: auto;
             font-family: "Raleway", sans-serif;
+            margin-top: 20px;
         }
 
         .container h1{
@@ -190,7 +225,9 @@
 
         .funciones-articulos{
             display: flex;
-            justify-content: end;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
         .botones-acciones{
@@ -255,11 +292,20 @@
 
         #eliminar-articulo input{
             width: 120px;
-            height: 25px;
-            background-color: red;
-            color: white;
-            border-radius: 5px;
+            height: 20px;
+            border: 0px;
+            background-color: var(--blanco);
+            color: red;
         }
+
+        .eliminar_articulo:hover input{
+            background-color: red !important;
+            color: white !important;
+            transition: 0.5s;
+            font-weight: bold;
+        }
+
+        
 
         #eliminar-articulo form{
             display: flex;
@@ -269,6 +315,19 @@
 
         #eliminar-articulo form input{
             cursor: pointer;
+        }
+
+        #boton-buscar{
+            font-family: "Raleway", sans-serif;
+            width: 100px;
+            color: var(--negro);
+            border-radius: 5px;
+            border: 1px solid var(--negro);
+            cursor: pointer;
+            height: 21px;
+            background-color: #d9d9d9;
+            font-weight: 600;
+            height: 22px;
         }
         
         .articulo-eliminar, .mod-articulo{
@@ -355,39 +414,6 @@
             border: 0px;
             background-color: ;
         }
-                                                                                                                                                                                                                                                                                                                                                      
-        /* .boton_modificar{
-            border: 1px solid var(--verde-azul);
-            color: var(--verde-azul);
-        }
-
-        .boton_modificar:hover{
-            background-color: var(--verde-azul);
-            color: white;
-            transition: 0.5s;
-        }
-
-        .entrada_articulo{
-            border: 1px solid var(--verde);
-            color: var(--verde);
-        }
-
-        .entrada_articulo:hover{
-            background-color: var(--verde);
-            color: white;
-            transition: 0.5s;
-        }
-
-        .salida_articulo{
-            border: 1px solid var(--azul);
-            color: var(--azul);
-        }
-
-        .salida_articulo:hover{
-            background-color: var(--azul);
-            color: white;
-            transition: 0.5s;
-        } */
 
         .eliminar_articulo{
             color: red;
@@ -404,12 +430,12 @@
             font-family: "Raleway", sans-serif;
         }
 
-        /* .eliminar_articulo:hover{
+        .eliminar_articulo:hover{
             background-color: red;
             color: white;
             transition: 0.5s;
             font-weight: bold;
-        } */
+        }
 
 
     </style>
@@ -423,11 +449,11 @@
         </div>
         <nav>
             <ul>
-                <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a></li>
-                <li><a href="./crear_usuarios.php">Usuarios</a></li>
-                <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+                <li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./inventario_admin.php'>Inicio</a></li>
+                <li><i class="bi bi-box-seam-fill" style="display: none;"></i><i class="bi bi-box-seam"><a href="./anadir_articulo.php"></i>Inventario</a></li>
+                <li><i class="bi bi-person-fill" style="display: none;"></i><i class="bi bi-person"></i><a href="./crear_usuarios.php">Usuarios</a></li>
+                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
+                <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
@@ -647,7 +673,14 @@
                                         echo "<h4> Unidades: <span style='font-weight: 500;'>" . $row["unidades"] . "</span></h4>";
                                     echo "</div>";
                                     echo "<input type='hidden' name='id_articulo' value='" . $row["id_Articulo"] . "'>";
-                                    echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo' value='Eliminar Articulo'>";
+                                    echo "<div class='eliminar_articulo' name='eliminar' id='eliminar'>";
+                                        // echo "<i class='bi bi-trash-fill'>Eliminar Articulo</i>";
+                                        echo "<i class='bi bi-trash-fill'></i>";
+                                        echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo' value='Eliminar Articulo'>";
+                                    echo "</div>";
+                                    // echo "<i class='bi bi-trash-fill'></i>";
+                                    // echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo-boton' value='Eliminar Articulo'>";
+                                    
                                 echo "</form>";
                             echo "</div>";
                         }
@@ -725,8 +758,8 @@
                                         echo "<label for='proveedor'>Proveedor: </label>";
                                         echo "<input type='text' name='proveedor' id='proveedor' value='". $row["proveedor"] ."'>";
                                         echo "<br><br>";
-                                        echo "<label for='unidades'>Unidades: </label>";
-                                        echo "<input type='number' name='unidades' id='unidades' value='". $row["unidades"] ."'>";
+                                        // echo "<label for='unidades'>Unidades: </label>";
+                                        // echo "<input type='number' name='unidades' id='unidades' value='". $row["unidades"] ."'>";
 
                                         echo "<label for='tipo_articulo'>Tipo de Articulo: </label>";
                                         echo "<select name='tipo_articulo' id='tipo_articulo'>";

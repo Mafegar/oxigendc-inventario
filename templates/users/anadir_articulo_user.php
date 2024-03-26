@@ -80,10 +80,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Inventario</title>
 
     <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+        
+        :root{
+            /* Paleta de colores empresa. */
+            --azul-oscuro: #4d4792;
+            --verde-azul: #86b398;
+            --verde:  #a2c037;
+            --azul: #68a8de;
+            --negro: #000000;
+            --blanco: #ffffff;
+        }
         
         html,body{
             margin: 0;
@@ -109,11 +123,46 @@
 
         nav ul li{
             list-style: none;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
         }
 
         nav ul li a{
             text-decoration: none;
             color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        nav ul li a:hover {
+            font-weight: bold;
+            color: #477296;
+
+            /* border-bottom: 3px solid;
+            border-image: var(--gradient_verdeAzul) 1;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block; */
+        }
+
+        nav ul li:hover .bi-box-seam, nav ul li:hover .bi-person, nav ul li:hover .bi-clipboard2, nav ul li:hover .bi-x-octagon, nav ul li:hover .bi-house{
+            display: none;
+        }
+
+        nav ul li:hover .bi-box-seam-fill, nav ul li:hover .bi-person-fill, nav ul li:hover .bi-clipboard2-fill, nav ul li:hover .bi-x-octagon-fill, nav ul li:hover .bi-house-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .logo img{
@@ -206,6 +255,37 @@
             border-radius: 5px;
         }
 
+        .entrada_articulo, .salida_articulo{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .entrada_articulo button, .salida_articulo button{
+            border: 0px;
+            background-color: ;
+        }
+        .eliminar_articulo{
+            color: red;
+            border: 1px solid red;
+        }
+
+        .salida_articulo i, .entrada_articulo i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+            font-style: normal;
+            font-family: "Raleway", sans-serif;
+        }
+
         /* TABLA PARA PODER BORRAR ARTICULOS */
 
         #eliminar-articulo{
@@ -264,14 +344,14 @@
 
     <header>
         <div class="logo">
-            <a href="./inventario_admin.html"><img src="../../img/logo-oxigen.png" alt=""></a>
+            <a href="./inventario_user.php"><img src="../../img/logo-oxigen.png" alt=""></a>
         </div>
         <nav>
             <ul>
-                <li><a href="./inventario_admin.php">Inicio</a></li>
-                <li><a href="./anadir_articulo.php">Inventario</a></li>
-                <li><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
-                <li><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
+                <li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./inventario_user.php'>Inicio</a></li>
+                <li><i class="bi bi-box-seam-fill" style="display: none;"></i><i class="bi bi-box-seam"><a href="./anadir_articulo_user.php"></i>Inventario</a></li>
+                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
+                <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>
     </header>
@@ -301,9 +381,13 @@
 
                 <div class="botones-acciones">
 
-                    <input type="button" name="entrada" id="entrada" value="Entrada de Articulos">
-                    
-                    <input type="button" name="salida" id="salida" value="Salida de Articulos">
+                    <div class="entrada_articulo" name="entrada" id="entrada">
+                        <i class="bi bi-file-earmark-plus-fill">Entrada de Articulos</i>
+                    </div>
+     
+                    <div class="salida_articulo" name="salida" id="salida">
+                        <i class="bi bi-file-earmark-x-fill">Salida de Articulos</i>
+                    </div>
 
                 </div>
             </form>
@@ -552,8 +636,7 @@
             }
         });
 
-        
-
+        // Funcion para mostrar el div de la fecha de control.
         function mostrarDivFechaControl(valor, contador){
             var divFechaControlInicio = document.getElementById('fecha-control-inicio-' + contador);
             var divFechaControlFinal = document.getElementById('fecha-control-final-' + contador);
