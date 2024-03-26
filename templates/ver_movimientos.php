@@ -124,6 +124,23 @@
             display: inline-block;
         }
 
+        nav ul li .bi-clipboard2-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        nav ul li .bi-clipboard2{
+            display: none;
+        }
+
+        nav ul li .movi_a{
+            font-weight: bold !important;
+            color: #477296;
+        }
+
         .logo img{
             width: 200px;
         }
@@ -220,7 +237,7 @@
 
                     }
                 ?>
-                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="./ver_movimientos.php">Historial de Movimientos</a></li>                
+                <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="./ver_movimientos.php" class="movi_a">Historial de Movimientos</a></li>                
                 <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
         </nav>

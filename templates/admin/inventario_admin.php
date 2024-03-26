@@ -173,7 +173,7 @@
             
                 <a href="./anadir_articulo.php">
                     <div class="inventario">
-                        <li>Inventario</li>
+                        <li><i class="bi bi-box-seam-fill"></i>Inventario</li>
                     </div>
                 </a>
                 <a href="./crear_usuarios.php">

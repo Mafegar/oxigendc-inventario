@@ -134,6 +134,23 @@
             display: inline-block;
         }
 
+        nav ul li .bi-person-fill{
+            display: block !important;
+            background: linear-gradient(167deg, rgba(162,192,55,1) 0%, rgba(134,179,152,1) 50%, rgba(104,168,222,1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        nav ul li .bi-person{
+            display: none;
+        }
+
+        nav ul li .usuario_a{
+            font-weight: bold !important;
+            color: #477296;
+        }
+
         .logo img{
             width: 200px;
         }
@@ -370,7 +387,7 @@
             <ul>
             <li><i class='bi bi-house-fill' style='display: none;'></i><i class='bi bi-house'></i><a href='./inventario_admin.php'>Inicio</a></li>
                 <li><i class="bi bi-box-seam-fill" style="display: none;"></i><i class="bi bi-box-seam"><a href="./anadir_articulo.php"></i>Inventario</a></li>
-                <li><i class="bi bi-person-fill" style="display: none;"></i><i class="bi bi-person"></i><a href="./crear_usuarios.php">Usuarios</a></li>
+                <li><i class="bi bi-person-fill" style="display: none;"></i><i class="bi bi-person"></i><a href="./crear_usuarios.php" class="usuario_a">Usuarios</a></li>
                 <li><i class="bi bi-clipboard2-fill" style="display: none;"></i><i class="bi bi-clipboard2"></i><a href="../ver_movimientos.php">Historial de Movimientos</a></li>
                 <li><i class="bi bi-x-octagon-fill" style="display: none;"></i><i class="bi bi-x-octagon"></i><a href="../../conexion_bd/cerrar_sesion.php">Cerrar Sesion</a></li>
             </ul>
