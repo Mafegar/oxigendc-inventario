@@ -25,6 +25,7 @@
         $tipo_producto = $_POST["tipo_producto"];
         $fecha_control = $_POST["fecha_control_inicio"];
         $fecha_siguiente = $_POST["fecha_control_final"];
+        $categoria = $_POST["categoria"];
         $ubicacion = $_POST["ubi"];
         $proveedor = $_POST["proveedor"];
         $unidades = $_POST["unidades"];
@@ -34,7 +35,25 @@
         $sqlArticulo = "SELECT * FROM articulos";
         $resultArticulo = mysqli_query($conn, $sqlArticulo);
 
-         
+        $codigo_identi = '';
+
+        switch($categoria){
+            case 'cable':
+                $codigo_identi = 'CAB';
+                break;
+            case 'alicate':
+                $codigo_identi = 'ALC';
+                break;
+            case 'llave':
+                $codigo_identi = 'LLV';
+                break;
+        }
+
+        
+
+        $categoria_articulo = obtenerUltimoIdent($conn, $codigo_identi);
+        $codigo_articulo_final = $codigo_identi ."-". $categoria_articulo;
+
 
         // Verificamos si el articulo ya existe en la base de datos.
         $si_exsiste = false;
@@ -53,13 +72,12 @@
         } else {
             // Verificamos si el articulo es un equipo para insertar las fechas de control.
             if($tipo_producto == "Equipo"){
-                $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                $sql = "INSERT INTO articulos (cate_ident, ident_Arti, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                VALUES ('$codigo_identi', '$codigo_articulo_final', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
             } else {
-                $sql = "INSERT INTO articulos (nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                VALUES ('$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                $sql = "INSERT INTO articulos (cate_ident, ident_Arti, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                VALUES ('$codigo_identi',  '$codigo_articulo_final', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
             } 
-            $resultUpdate = mysqli_query($conn, $sql);
         }
 
         if($conn->query($sql) === TRUE or $conn->query($sqlUpdate) === TRUE){
@@ -71,6 +89,30 @@
             echo "Error al crear el artículo: " . $conn->error;
         }
 
+    }
+
+    function obtenerUltimoIdent($conn, $codigo_identi){
+        // Hacemos una consulta para obtener el ultimo identificador de articulo.
+        $sqlIdenArticulo = "SELECT MAX(SUBSTRING(ident_Arti, LENGTH(cate_ident) + 2)) AS ultimo_iden FROM articulos WHERE cate_ident = '$codigo_identi'";
+        // Ejecutamos la consulta.
+        $resultIdenArticulo = $conn->query($sqlIdenArticulo);
+    
+        // Verificamos si se ha realizado la consulta.
+        if($resultIdenArticulo->num_rows > 0){
+            // Obtenemos el ultimo identificador de articulo
+            $row = $resultIdenArticulo->fetch_assoc();
+            $ultimo_iden = $row["ultimo_iden"];
+            // Verificamos si el ultimo identificador es nulo.
+            if($ultimo_iden == null){
+                return '001';
+            } else {
+                // Incrementamos el identificador y lo formateamos adecuadamente (rellenando con ceros a la izquierda si es necesario)
+                $siguiente_iden = str_pad($ultimo_iden + 1, 3, "0", STR_PAD_LEFT);
+                return $siguiente_iden;
+            }
+        } else {
+            return '001';
+        }
     }
 
     // Hacer una entrada a la base de datos.

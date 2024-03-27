@@ -560,6 +560,14 @@
                                 <option value="Kit Maleta">Kit Maleta</option>
                                 <option value="Herramienta">Herramienta</option>
                             </select>
+
+                            <label for="categoria">Categoria: </label>
+                            <select name="categoria" id="categoria" required>
+                                <option value="">Escoja una Categoria</option>
+                                <option value="cable">Cables</option>
+                                <option value="alicate">Alicates</option>
+                                <option value="llave">Llaves</option>
+                            </select>
                             <br><br>
                             <div class="fecha-control-inicio" style="display: none;">
                                 <label for="fecha_control_inicio">Fecha Control: </label>
@@ -872,6 +880,7 @@
                                     }
                                     
                                 } 
+
                             } else {
                                 $mensaje_alert = "No se encontro ningun articulo con ese nombre.";
                                 $mensaje = "No hay articulos en el inventario con ese nombre.";
