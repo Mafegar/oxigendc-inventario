@@ -35,28 +35,34 @@
         $sqlArticulo = "SELECT * FROM articulos";
         $resultArticulo = mysqli_query($conn, $sqlArticulo);
 
-        $codigo_identi = '';
+        // Verificamos si en la columna de categoria_ident hay registros con la categoría 'cable', 'martillo', 'llave', etc.
+        $sqlCateg = "SELECT 
+                        SUM(categoria_ident LIKE 'CAB%') AS count_cab,
+                        SUM(categoria_ident LIKE 'MRT%') AS count_mrt,
+                        SUM(categoria_ident LIKE 'LLV%') AS count_llv
+                    FROM articulos";
 
-        switch($categoria){
-            case 'cable':
-                $codigo_identi = 'CAB';
-                break;
-            case 'alicate':
-                $codigo_identi = 'ALC';
-                break;
-            case 'llave':
-                $codigo_identi = 'LLV';
-                break;
+        $resultIdent = mysqli_query($conn, $sqlCateg);
+        $rowIdent = mysqli_fetch_assoc($resultIdent);
+
+        // Si no hay registros con la categoría "CAB", "MRT", "LLV"... Reiniciamos el valor de la tabla num_codigo a su valor inicial.
+        if($rowIdent['count_cab'] == 0){
+            $sqlResetCAB = "UPDATE categorias SET num_codigo = 1000 WHERE nombre = 'cable'";
+            mysqli_query($conn, $sqlResetCAB);
+        }
+        if($rowIdent['count_mrt'] == 0){
+            $sqlResetMRT = "UPDATE categorias SET num_codigo = 2000 WHERE nombre = 'martillo'";
+            mysqli_query($conn, $sqlResetMRT);
+        }
+        if($rowIdent['count_llv'] == 0){
+            $sqlResetLLV = "UPDATE categorias SET num_codigo = 3000 WHERE nombre = 'llave'";
+            mysqli_query($conn, $sqlResetLLV);
         }
 
-        
-
-        $categoria_articulo = obtenerUltimoIdent($conn, $codigo_identi);
-        $codigo_articulo_final = $codigo_identi ."-". $categoria_articulo;
-
+        $codigo_identi = '';
 
         // Verificamos si el articulo ya existe en la base de datos.
-        $si_exsiste = false;
+        $si_existe = false;
 
         while($row = mysqli_fetch_assoc($resultArticulo)){
             if($row["nombre"] == $nombre && $row["marca"] == $marca && $row["modelo"] == $modelo && $row["detalles"] == $detalles && $row["tipo_producto"] == $tipo_producto && $row["ubicacion"] == $ubicacion){
@@ -64,22 +70,130 @@
                 break;
             }
         }
-
-        if($si_exsiste == true){
-            // Actualizamos las unidades del articulo en la base de datos si el articulo que crea ya existe.
+        
+        if($si_existe){
+            // Actualizamos las unidades del artículo en la base de datos si el artículo que se está creando ya existe.
             $sqlUpdate = "UPDATE articulos SET unidades = unidades + $unidades WHERE nombre = '$nombre' AND marca = '$marca' AND modelo = '$modelo' AND detalles = '$detalles' AND tipo_producto = '$tipo_producto' AND ubicacion = '$ubicacion'";
             $resultUpdate = mysqli_query($conn, $sqlUpdate);
         } else {
-            // Verificamos si el articulo es un equipo para insertar las fechas de control.
-            if($tipo_producto == "Equipo"){
-                $sql = "INSERT INTO articulos (cate_ident, ident_Arti, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                VALUES ('$codigo_identi', '$codigo_articulo_final', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
-            } else {
-                $sql = "INSERT INTO articulos (cate_ident, ident_Arti, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                VALUES ('$codigo_identi',  '$codigo_articulo_final', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
-            } 
-        }
+            
+            if($categoria == 'cable'){
+                // Obtener el valor actual de $num_codigo para la categoría 'Cable' desde la base de datos.
+                $sqlCAB = "SELECT num_codigo FROM categorias WHERE nombre = 'cable'";
+                $result = mysqli_query($conn, $sqlCAB);
+                $row = mysqli_fetch_assoc($result);
 
+                // Si se encuentra el valor en la base de datos, lo incrementamos.
+                if ($row == TRUE) {
+                    $num_codigo = intval($row['num_codigo']) + 1;
+                } else {
+                    // Si no hay valor en la base de datos, inicializamos $num_codigo a 1.
+                    $num_codigo = 1;
+                }
+
+                // Actualizar el valor de $num_codigo en la base de datos.
+                $sqlUpdate = "UPDATE categorias SET num_codigo = $num_codigo WHERE nombre = 'cable'";
+                mysqli_query($conn, $sqlUpdate);
+
+                // Construir el código identificativo para la categoría 'Cable'.
+                $codigo_identi_cab = 'CAB' . sprintf("%03d", $num_codigo);
+
+            } else if($categoria == 'martillo'){
+                // Obtener el valor actual de $num_codigo para la categoría 'Cable' desde la base de datos.
+                $sqlMRT = "SELECT num_codigo FROM categorias WHERE nombre = 'martillo'";
+                $result = mysqli_query($conn, $sqlMRT);
+                $row = mysqli_fetch_assoc($result);
+
+                // Si se encuentra el valor en la base de datos, lo incrementamos.
+                if ($row == TRUE) {
+                    $num_codigo = intval($row['num_codigo']) + 1;
+                } else {
+                    // Si no hay valor en la base de datos, inicializamos $num_codigo a 1.
+                    $num_codigo = 1;
+                }
+
+                // Actualizar el valor de $num_codigo en la base de datos.
+                $sqlUpdate = "UPDATE categorias SET num_codigo = $num_codigo WHERE nombre = 'martillo'";
+                mysqli_query($conn, $sqlUpdate);
+
+                // Construir el código identificativo para la categoría 'Martillo'.
+                $codigo_identi_mrt = 'MRT' . sprintf("%03d", $num_codigo);
+
+            } else if($categoria == 'llave'){
+                $sqlLLV = "SELECT num_codigo FROM categorias WHERE nombre = 'llave'";
+                $result = mysqli_query($conn, $sqlLLV);
+                $row = mysqli_fetch_assoc($result);
+
+                // Si se encuentra el valor en la base de datos, lo incrementamos.
+                if($row == TRUE){
+                    $num_codigo = intval($row['num_codigo']) + 1;
+                } else {
+                    // Si no hay valor en la base de datos, inicializamos $num_codigo a 1.
+                    $num_codigo = 1;
+                }
+
+                // Actualizar el valor de $num_codigo en la base de datos.
+                $sqlUpdate = "UPDATE categorias SET num_codigo = $num_codigo WHERE nombre = 'llave'";
+                mysqli_query($conn, $sqlUpdate);
+
+                // Construir el código identificativo para la categoría 'Llave'.
+                $codigo_identi_llv = 'LLV' . sprintf("%03d", $num_codigo);
+
+            }
+
+            
+            // Ahora, continuamos con el switch
+            switch($categoria){
+                case 'cable':
+                    $sigl_identi = 'CAB';
+                    $codigo_identi_cab = $sigl_identi ."-". $num_codigo;
+                    $num_codigo++;
+                    break;
+                case 'martillo':
+                    $sigl_identi = 'MRT';
+                    $codigo_identi_mrt = $sigl_identi ."-". $num_codigo;
+                    $num_codigo++;
+                    break;
+                case 'llave':
+                    $sigl_identi = 'LLV';
+                    $codigo_identi_llv = $sigl_identi ."-". $num_codigo;
+                    $num_codigo++;
+                    break;
+            }
+
+            if($categoria == 'cable'){
+                // Insertar el nuevo artículo en la base de datos si es tipo cable.
+                if($tipo_producto == "Equipo"){
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                } else {
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                }
+
+            } else if($categoria == 'martillo'){
+                // Insertar el nuevo artículo en la base de datos si es tipo martillo.
+                if($tipo_producto == "Equipo"){
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                } else {
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                }
+
+            } else if($categoria == 'llave'){
+                // Insertar el nuevo artículo en la base de datos si es tipo martillo.
+                if($tipo_producto == "Equipo"){
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                } else {
+                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES ('$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                }
+            }
+           
+        }
+        
         if($conn->query($sql) === TRUE or $conn->query($sqlUpdate) === TRUE){
             $mensaje = "Articulo creado con éxito.";
             echo "<script> alert('". $mensaje ."') </script>";
@@ -91,29 +205,6 @@
 
     }
 
-    function obtenerUltimoIdent($conn, $codigo_identi){
-        // Hacemos una consulta para obtener el ultimo identificador de articulo.
-        $sqlIdenArticulo = "SELECT MAX(SUBSTRING(ident_Arti, LENGTH(cate_ident) + 2)) AS ultimo_iden FROM articulos WHERE cate_ident = '$codigo_identi'";
-        // Ejecutamos la consulta.
-        $resultIdenArticulo = $conn->query($sqlIdenArticulo);
-    
-        // Verificamos si se ha realizado la consulta.
-        if($resultIdenArticulo->num_rows > 0){
-            // Obtenemos el ultimo identificador de articulo
-            $row = $resultIdenArticulo->fetch_assoc();
-            $ultimo_iden = $row["ultimo_iden"];
-            // Verificamos si el ultimo identificador es nulo.
-            if($ultimo_iden == null){
-                return '001';
-            } else {
-                // Incrementamos el identificador y lo formateamos adecuadamente (rellenando con ceros a la izquierda si es necesario)
-                $siguiente_iden = str_pad($ultimo_iden + 1, 3, "0", STR_PAD_LEFT);
-                return $siguiente_iden;
-            }
-        } else {
-            return '001';
-        }
-    }
 
     // Hacer una entrada a la base de datos.
     if(isset($_POST["hacer-entrada"])){
@@ -248,12 +339,12 @@
 
     }
     
-
     // Eliminar articulos de la base de datos.
     if(isset($_POST["eliminar-articulo"])){
         $id_articulo = $_POST["id_articulo"];
 
         $sql = "DELETE FROM articulos WHERE id_Articulo = '$id_articulo'";
+        
 
         if($conn->query($sql) === TRUE){
             $mensaje = "Eliminación realizada con éxito.";

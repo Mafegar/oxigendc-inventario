@@ -565,7 +565,7 @@
                             <select name="categoria" id="categoria" required>
                                 <option value="">Escoja una Categoria</option>
                                 <option value="cable">Cables</option>
-                                <option value="alicate">Alicates</option>
+                                <option value="martillo">Martillos</option>
                                 <option value="llave">Llaves</option>
                             </select>
                             <br><br>
@@ -695,17 +695,15 @@
                                     echo "<div class='articulo-info'>";
                                         echo "<h4> Articulo: <span style='font-weight: 500;'>" . $row["nombre"] . "</span></h4>";
                                         echo "<h4> Tipo Producto: <span style='font-weight: 500;'>" . $row["tipo_producto"] . "</span></h4>";
+                                        echo "<h4> Modelo: <span style='font-weight: 500;'>" . $row["modelo"] . "</span></h4>";
                                         echo "<h4> Ubicación: <span style='font-weight: 500;'>" . $row["ubicacion"] . "</span></h4>";
                                         echo "<h4> Unidades: <span style='font-weight: 500;'>" . $row["unidades"] . "</span></h4>";
                                     echo "</div>";
                                     echo "<input type='hidden' name='id_articulo' value='" . $row["id_Articulo"] . "'>";
                                     echo "<div class='eliminar_articulo' name='eliminar' id='eliminar'>";
-                                        // echo "<i class='bi bi-trash-fill'>Eliminar Articulo</i>";
                                         echo "<i class='bi bi-trash-fill'></i>";
                                         echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo' value='Eliminar Articulo'>";
                                     echo "</div>";
-                                    // echo "<i class='bi bi-trash-fill'></i>";
-                                    // echo "<input type='submit' name='eliminar-articulo' id='eliminar-articulo-boton' value='Eliminar Articulo'>";
                                     
                                 echo "</form>";
                             echo "</div>";
