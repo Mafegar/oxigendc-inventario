@@ -20,6 +20,10 @@
     if(isset($_POST["boton-buscar"])){
         $busuqeda = $_POST["barra-buscar"];
         $tipo_articulo = $_POST["buscar-tipo-arti"];
+        $buscar_categoria = $_POST["buscar-categoria"];
+        
+
+        
 
         if($tipo_articulo == "Equipo") {
             // Consultamos la base de bbdd para obeter los articulos de tipo Equipo.
@@ -36,13 +40,29 @@
             $sqlBuscarArticulo = "SELECT * FROM articulos WHERE tipo_producto = 'Herramienta'";
             $result = mysqli_query($conn, $sqlBuscarArticulo);
 
+        } else if($buscar_categoria == "cable"){
+            // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria Cable.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident  LIKE 'CAB%'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+    
+        } else if($buscar_categoria == "martillo") {
+            // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria Martillo.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident LIKE 'MRT%'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+    
+        } else if($buscar_categoria == "llave"){
+            // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria llave.
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident LIKE 'LLV%'";
+            $result = mysqli_query($conn, $sqlBuscarArticulo);
+                
         } else {
             // Consultamos la bbdd para obtener los articulos que busque el usuario a traves de la barra de busqueda.
             $sqlBuscarArticulo = "SELECT * FROM articulos WHERE nombre LIKE '%$busuqeda%'";
             $result = mysqli_query($conn, $sqlBuscarArticulo);
         }
-        
     }
+        
+
 
     // Hacemos una consulta a la base de datos para obtener los articulos y hacer entradas.
     $sqlHacerEntrada = "SELECT * FROM articulos";
@@ -264,7 +284,7 @@
             height: 20px;
         }
         
-        #buscar-tipo-arti{
+        #buscar-tipo-arti, #buscar-categoria{
             width: 150px;
             height: 23px;
             border-radius: 5px;
@@ -493,6 +513,12 @@
                             <option value="Equipo">Equipo</option>
                             <option value="Kit">Kit Maleta</option>
                             <option value="Herramienta">Herramienta</option>
+                        </select>
+                        <select name="buscar-categoria" id="buscar-categoria">
+                            <option value="">Escoja una Categoria</option>
+                            <option value="cable">Cables</option>
+                            <option value="martillo">Martillos</option>
+                            <option value="llave">Llaves</option>
                         </select>
 
                         <button type="submit" name="boton-buscar" id="boton-buscar"><i class="bi bi-search">Buscar</i></button>

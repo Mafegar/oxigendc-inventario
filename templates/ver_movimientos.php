@@ -40,6 +40,16 @@
 
     }
 
+    // if(isset($POST["boton-buscar-fechas"])){
+
+    //     $fecha_inicio = $_POST["fecha_inicio"];
+    //     $fecha_fin = $_POST["fecha_fin"];
+
+    //     $sqlBuscar = "SELECT * FROM movimientos WHERE fecha_movimiento BETWEEN '$fecha_inicio' AND '$fecha_fin'";
+    //     $result = mysqli_query($conn, $sqlFechas);
+
+    // }
+
 
 
 
@@ -253,6 +263,11 @@
                 <h1>Movimientos Realizados</h1>
 
                 <div class="buscador">
+                    <label for="fecha_inicio">Fecha Inicio: </label>
+                    <input type="date" name="fecha_inicio" id="fecha_inicio">
+                    <label for="fecha_fin">Fecha Fin: </label>
+                    <input type="date" name="fecha_fin" id="fecha_fin">
+                    <input type="submit" name="boton-buscar-fechas" id="boton-buscar-fechas" value="Buscar">  
                     <input type="text" name="barra-buscar" id="barra-buscar" placeholder="Buscar Articulo">
                     <select name="buscar-tipo-mov" id="buscar-tipo-mov">
                         <option value="">Tipo de Movimiento</option>
@@ -262,6 +277,17 @@
                     <input type="submit" name="boton-buscar" id="boton-buscar" value="Buscar">
 
                 </div>
+            </div>
+
+            <div class="funciones-fechas">
+                <form action="" method="post">
+                    <label for="fecha_inicio">Fecha Inicio: </label>
+                    <input type="date" name="fecha_inicio" id="fecha_inicio">
+                    <label for="fecha_fin">Fecha Fin: </label>
+                    <input type="date" name="fecha_fin" id="fecha_fin">
+                    <input type="submit" name="boton-buscar-fechas" id="boton-buscar-fechas" value="Buscar">  
+                </form>
+
             </div>
 
             <div class="tabla-movimientos">
