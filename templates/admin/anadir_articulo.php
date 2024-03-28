@@ -21,9 +21,6 @@
         $busuqeda = $_POST["barra-buscar"];
         $tipo_articulo = $_POST["buscar-tipo-arti"];
         $buscar_categoria = $_POST["buscar-categoria"];
-        
-
-        
 
         if($tipo_articulo == "Equipo") {
             // Consultamos la base de bbdd para obeter los articulos de tipo Equipo.
@@ -42,17 +39,17 @@
 
         } else if($buscar_categoria == "cable"){
             // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria Cable.
-            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident  LIKE 'CAB%'";
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE prinCategoria_ident   LIKE 'CAB%'";
             $result = mysqli_query($conn, $sqlBuscarArticulo);
     
         } else if($buscar_categoria == "martillo") {
             // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria Martillo.
-            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident LIKE 'MRT%'";
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE prinCategoria_ident  LIKE 'MRT%'";
             $result = mysqli_query($conn, $sqlBuscarArticulo);
     
         } else if($buscar_categoria == "llave"){
             // Consultamos la base de bbdd para obeter los articulos que sean de la Categoria llave.
-            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE categoria_ident LIKE 'LLV%'";
+            $sqlBuscarArticulo = "SELECT * FROM articulos WHERE prinCategoria_ident  LIKE 'LLV%'";
             $result = mysqli_query($conn, $sqlBuscarArticulo);
                 
         } else {
@@ -808,8 +805,6 @@
                                         echo "<label for='proveedor'>Proveedor: </label>";
                                         echo "<input type='text' name='proveedor' id='proveedor' value='". $row["proveedor"] ."'>";
                                         echo "<br><br>";
-                                        // echo "<label for='unidades'>Unidades: </label>";
-                                        // echo "<input type='number' name='unidades' id='unidades' value='". $row["unidades"] ."'>";
 
                                         echo "<label for='tipo_articulo'>Tipo de Articulo: </label>";
                                         echo "<select name='tipo_articulo' id='tipo_articulo'>";

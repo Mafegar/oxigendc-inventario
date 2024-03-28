@@ -35,11 +35,11 @@
         $sqlArticulo = "SELECT * FROM articulos";
         $resultArticulo = mysqli_query($conn, $sqlArticulo);
 
-        // Verificamos si en la columna de categoria_ident hay registros con la categoría 'cable', 'martillo', 'llave', etc.
+        // Verificamos si en la columna de prinCategoria_ident hay registros con la categoría 'cable', 'martillo', 'llave', etc.
         $sqlCateg = "SELECT 
-                        SUM(categoria_ident LIKE 'CAB%') AS count_cab,
-                        SUM(categoria_ident LIKE 'MRT%') AS count_mrt,
-                        SUM(categoria_ident LIKE 'LLV%') AS count_llv
+                        SUM(prinCategoria_ident LIKE 'CAB%') AS count_cab,
+                        SUM(prinCategoria_ident LIKE 'MRT%') AS count_mrt,
+                        SUM(prinCategoria_ident LIKE 'LLV%') AS count_llv
                     FROM articulos";
 
         $resultIdent = mysqli_query($conn, $sqlCateg);
@@ -65,7 +65,7 @@
         $si_existe = false;
 
         while($row = mysqli_fetch_assoc($resultArticulo)){
-            if($row["nombre"] == $nombre && $row["marca"] == $marca && $row["modelo"] == $modelo && $row["detalles"] == $detalles && $row["tipo_producto"] == $tipo_producto && $row["ubicacion"] == $ubicacion){
+            if($row["nombre"] == $nombre && $row["marca"] == $marca && $row["modelo"] == $modelo  && $row["tipo_producto"] == $tipo_producto && $row["prinCategoria_ident"] == $categoria){
                 $si_exsiste = true;
                 break;
             }
@@ -164,31 +164,31 @@
             if($categoria == 'cable'){
                 // Insertar el nuevo artículo en la base de datos si es tipo cable.
                 if($tipo_producto == "Equipo"){
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 } else {
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_cab', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 }
 
             } else if($categoria == 'martillo'){
                 // Insertar el nuevo artículo en la base de datos si es tipo martillo.
                 if($tipo_producto == "Equipo"){
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 } else {
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_mrt', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 }
 
             } else if($categoria == 'llave'){
                 // Insertar el nuevo artículo en la base de datos si es tipo martillo.
                 if($tipo_producto == "Equipo"){
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', '$fecha_control', '$fecha_siguiente',  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 } else {
-                    $sql = "INSERT INTO articulos (categoria_ident, nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
-                    VALUES ('$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
+                    $sql = "INSERT INTO articulos (prinCategoria_ident, subCategoria_ident ,nombre, marca, modelo, detalles, tipo_producto, fecha_control, fecha_sig_control, ubicacion, proveedor, unidades, forma_producto) 
+                    VALUES (`d ,'$codigo_identi_llv', '$nombre', '$marca', '$modelo', '$detalles', '$tipo_producto', NULL , NULL,  '$ubicacion', '$proveedor', '$unidades', '$tipo_articulo')";
                 }
             }
            
@@ -218,12 +218,15 @@
         $nombre_usuario_entr = mysqli_fetch_assoc($result)["nombre"];
 
         // Consulta para obtener el id del articulo.
-        $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_entr'";
+        $sqlidArticulo = "SELECT id_Articulo, prinCategoria_ident, subCategoria_ident FROM articulos WHERE nombre = '$nombre_entr'";
         $resultIdArticulo = mysqli_query($conn, $sqlidArticulo);
+        $rowArticulos = mysqli_fetch_assoc($resultIdArticulo);
+        $categoria_Primaria = $rowArticulos["prinCategoria_ident"];
+        $sub_Categoria = $rowArticulos["subCategoria_ident"];
 
         // Insertamos la entrada del articulo en la tabla de entradas.
-        $sql = "INSERT INTO entradas (nombre_articulo, unidades, fecha_entrada, nombre_usuario)
-            VALUES ('$nombre_entr', '$unidades_entr', '$fecha_entr', '$nombre_usuario_entr')";
+        $sql = "INSERT INTO entradas (prinCategoria_ident, subCategoria_ident, nombre_articulo, unidades, fecha_entrada, nombre_usuario)
+            VALUES ('$categoria_Primaria', '$sub_Categoria', '$nombre_entr', '$unidades_entr', '$fecha_entr', '$nombre_usuario_entr')";
 
         // Actualizamos las unidades del articulo en la tabla de articulos.
         $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades + $unidades_entr WHERE nombre = '$nombre_entr'";
@@ -232,8 +235,8 @@
         if($conn->query($sql) === TRUE && $conn->query($sqlActualizarUnidades) === TRUE){
             
             // Insertamos la entrada que hacemos en la tabla de movimientos.
-            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion, nombre_usuario)
-                VALUES ('Entrada', '$nombre_entr', '$unidades_entr', '$fecha_entr', 'Oxigen' ,'$nombre_usuario_entr')";
+            $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, prinCategoria_ident, subCategoria_ident, nombre_articulo, unidades, fecha_movimiento, ubicacion, nombre_usuario)
+                VALUES ('Entrada', '$categoria_Primaria', '$sub_Categoria', '$nombre_entr', '$unidades_entr', '$fecha_entr', 'Oxigen' ,'$nombre_usuario_entr')";
 
             // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
             if($conn->query($sqlMovimiento) === TRUE){
@@ -268,12 +271,16 @@
         $nombre_usuario_sali = mysqli_fetch_assoc($result)["nombre"];
 
         // Consulta para obtener el id del articulo.
-        $sqlidArticulo = "SELECT id_Articulo FROM articulos WHERE nombre = '$nombre_sali'";
+        $sqlidArticulo = "SELECT id_Articulo, prinCategoria_ident, subCategoria_ident FROM articulos WHERE nombre = '$nombre_sali'";
+        $resultIdArticulo = mysqli_query($conn, $sqlidArticulo);
+        $rowArticulos = mysqli_fetch_assoc($resultIdArticulo);
+        $categoria_Primaria = $rowArticulos["prinCategoria_ident"];
+        $sub_Categoria = $rowArticulos["subCategoria_ident"];
 
         if($unidades < 0 || $unidades >= $unidades_sali){
             // Insertamos la salida del articulo en la tabla de salidas.
-            $sql = "INSERT INTO salidas (nombre_articulo, unidades, fecha_salida, nombre_usuario)
-            VALUES ('$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
+            $sql = "INSERT INTO salidas (prinCategoria_ident, subCategoria_ident, nombre_articulo, unidades, fecha_salida, nombre_usuario)
+            VALUES ('$categoria_Primaria', '$sub_Categoria', '$nombre_sali', '$unidades_sali', '$fecha_sali', '$nombre_usuario_sali')";
 
             // Actualizamos las unidades del articulo en la tabla de articulos.
             $sqlActualizarUnidades = "UPDATE articulos SET unidades = unidades - $unidades_sali WHERE nombre = '$nombre_sali'";
@@ -282,12 +289,12 @@
 
                 if($ubicacion_sali == "Oxigen"){
                     // Insertamos la entrada que hacemos en la tabla de movimientos.
-                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
-                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Oxigen' ,'$nombre_usuario_sali')";
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, prinCategoria_ident, subCategoria_ident, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$categoria_Primaria', '$sub_Categoria', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Oxigen' ,'$nombre_usuario_sali')";
                 } else {
                     // Insertamos la entrada que hacemos en la tabla de movimientos.
-                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
-                        VALUES ('Salida', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Obra' ,'$nombre_usuario_sali')";
+                    $sqlMovimiento = "INSERT INTO movimientos (tipo_movimiento, prinCategoria_ident, subCategoria_ident, nombre_articulo, unidades, fecha_movimiento, ubicacion ,nombre_usuario)
+                        VALUES ('Salida', '$categoria_Primaria', '$sub_Categoria', '$nombre_sali', '$unidades_sali', '$fecha_sali', 'Obra' ,'$nombre_usuario_sali')";
                 }
 
                 // Comprobamos si se ha realizado la entrada en la tabla de movimientos.
